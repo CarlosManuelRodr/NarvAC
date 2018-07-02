@@ -10,6 +10,7 @@ De esta manera, un circuito simple como un semisumador cuya representación esqu
 ![HalfAdder](img/half_adder.jpg?raw=true  "HalfAdder")
 
 Puede ser visualizado como
+
 ![HalfAdderTree](img/half_adder2.jpeg?raw=true  "HalfAdderTree")
 
 Esta estructura funcional permite visualizar la complejidad de circuitos más sofisticados, como un sumador completo
