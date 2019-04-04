@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[     21138,        545]
-NotebookOptionsPosition[     20095,        517]
-NotebookOutlinePosition[     20429,        532]
-CellTagsIndexPosition[     20386,        529]
+NotebookDataLength[     52400,       1344]
+NotebookOptionsPosition[     49807,       1288]
+NotebookOutlinePosition[     50150,       1303]
+CellTagsIndexPosition[     50107,       1300]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -24,6 +24,13 @@ Cell["NarvAC Interpreter", "Title",
  CellChangeTimes->{{3.763167673405179*^9, 
   3.763167680951133*^9}},ExpressionUUID->"a8c0869c-6cd1-4f5d-a572-\
 55dca400baa3"],
+
+Cell[CellGroupData[{
+
+Cell["Opcodes", "Subchapter",
+ CellChangeTimes->{{3.7633279340409985`*^9, 
+  3.763327935257552*^9}},ExpressionUUID->"20e560d1-f6d5-4dad-905c-\
+1941871e49bd"],
 
 Cell[BoxData[{
  RowBox[{
@@ -109,10 +116,8 @@ Cell[BoxData[{
       RowBox[{"OpcodeLoadB", "[", "]"}], "\[Rule]", "\"\<LoadB\>\""}], ",", 
      RowBox[{
       RowBox[{"OpcodeStoreA", "[", "]"}], "\[Rule]", "\"\<StoreA\>\""}], ",", 
-     
      RowBox[{
       RowBox[{"OpcodeStoreB", "[", "]"}], "\[Rule]", "\"\<StoreB\>\""}], ",", 
-     
      RowBox[{
       RowBox[{"OpcodeAdd", "[", "]"}], "\[Rule]", "\"\<Add\>\""}], ",", 
      "\[IndentingNewLine]", 
@@ -145,7 +150,7 @@ Cell[BoxData[{
   3.739458920758739*^9}, {3.739459073788129*^9, 3.739459078197485*^9}, {
   3.739459263912469*^9, 3.739459372174268*^9}, {3.739460041739276*^9, 
   3.73946004893428*^9}, {3.739470532309569*^9, 3.739470582890979*^9}},
- CellLabel->"In[90]:=",ExpressionUUID->"657859b2-85a2-4028-b118-ad23bfbdf18a"],
+ CellLabel->"In[1]:=",ExpressionUUID->"657859b2-85a2-4028-b118-ad23bfbdf18a"],
 
 Cell[BoxData[{
  RowBox[{
@@ -198,7 +203,622 @@ Cell[BoxData[{
   3.763167792994544*^9, 3.7631678372063*^9}, {3.7631679579713306`*^9, 
   3.763168049269586*^9}, {3.7631681417582817`*^9, 3.763168209842328*^9}, {
   3.7631684947305403`*^9, 3.7631685460414743`*^9}},
- CellLabel->"In[66]:=",ExpressionUUID->"4e0e0cbd-e4e7-488d-9aee-1fe03c789fba"],
+ CellLabel->"In[14]:=",ExpressionUUID->"4e0e0cbd-e4e7-488d-9aee-1fe03c789fba"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Carga de programa a la memoria", "Subchapter",
+ CellChangeTimes->{{3.73003914187995*^9, 
+  3.7300391667357616`*^9}},ExpressionUUID->"9484df9d-54b3-4fa4-a084-\
+56818bdbb446"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"LoadProgram", "[", "program_", "]"}], ":=", 
+   RowBox[{"(", 
+    RowBox[{"RAM", " ", "=", " ", "program"}], ")"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"ClearProgram", "[", "]"}], ":=", 
+   RowBox[{"(", 
+    RowBox[{"RAM", " ", "=", " ", 
+     RowBox[{"ConstantArray", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+        "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", 
+         "0"}], "}"}], ",", "16"}], "]"}]}], ")"}]}], ";"}]}], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.729780772828034*^9, 3.729780803658269*^9}, {
+  3.729783790013154*^9, 3.729783820771214*^9}, {3.7297838586359262`*^9, 
+  3.729783859673622*^9}, {3.763328125402209*^9, 3.7633281595701957`*^9}},
+ CellLabel->"In[68]:=",ExpressionUUID->"d5251ca4-3511-4369-bae0-78b115e2db50"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["CPU", "Subchapter",
+ CellChangeTimes->{{3.7633280012008076`*^9, 3.7633280029933243`*^9}, {
+  3.763328171952817*^9, 
+  3.763328172456809*^9}},ExpressionUUID->"5e86a4c3-3fba-4318-862b-\
+56359e98ad7e"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"LoadProgram", "[", "program", "]"}], ";"}]], "Input",
+ CellChangeTimes->{{3.763328192580411*^9, 3.7633281957214375`*^9}},
+ CellLabel->"In[70]:=",ExpressionUUID->"79028814-0eca-4830-8fd5-b9203e16118a"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"LoadA", "[", "address_", "]"}], ":=", 
+   RowBox[{"(", 
+    RowBox[{"ARegister", " ", "=", " ", 
+     RowBox[{"RAM", "[", 
+      RowBox[{"[", 
+       RowBox[{
+        RowBox[{"FromDigits", "[", 
+         RowBox[{"address", ",", "2"}], "]"}], "+", "1"}], "]"}], "]"}]}], 
+    ")"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"LoadB", "[", "address_", "]"}], ":=", 
+   RowBox[{"(", 
+    RowBox[{"BRegister", " ", "=", " ", 
+     RowBox[{"RAM", "[", 
+      RowBox[{"[", 
+       RowBox[{
+        RowBox[{"FromDigits", "[", 
+         RowBox[{"address", ",", "2"}], "]"}], "+", "1"}], "]"}], "]"}]}], 
+    ")"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"StoreA", "[", "address_", "]"}], ":=", 
+   RowBox[{"(", 
+    RowBox[{
+     RowBox[{"RAM", "[", 
+      RowBox[{"[", 
+       RowBox[{
+        RowBox[{"FromDigits", "[", 
+         RowBox[{"address", ",", "2"}], "]"}], "+", "1"}], "]"}], "]"}], " ", 
+     "=", " ", "ARegister"}], ")"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"StoreB", "[", "address_", "]"}], ":=", 
+   RowBox[{"(", 
+    RowBox[{
+     RowBox[{"RAM", "[", 
+      RowBox[{"[", 
+       RowBox[{
+        RowBox[{"FromDigits", "[", 
+         RowBox[{"address", ",", "2"}], "]"}], "+", "1"}], "]"}], "]"}], " ", 
+     "=", " ", "BRegister"}], ")"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"Add", "[", "]"}], ":=", 
+   RowBox[{"Block", "[", 
+    RowBox[{
+     RowBox[{"{", "sum", "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"sum", " ", "=", " ", 
+       RowBox[{"IntegerDigits", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"FromDigits", "[", 
+           RowBox[{"ARegister", ",", "2"}], "]"}], "+", 
+          RowBox[{"FromDigits", "[", 
+           RowBox[{"ARegister", ",", "2"}], "]"}]}], ",", "2"}], "]"}]}], ";",
+       "\[IndentingNewLine]", 
+      RowBox[{"ALUNegativeFlag", " ", "=", " ", "0"}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{"sum", " ", ">", " ", "255"}], ",", 
+        RowBox[{"ALUOverflowFlag", " ", "=", " ", "1"}], ",", 
+        RowBox[{"ALUOverflowFlag", " ", "=", " ", "0"}]}], "]"}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{"EvenQ", "[", "sum", "]"}], ",", 
+        RowBox[{"ALUParityFlag", " ", "=", " ", "1"}], ",", " ", 
+        RowBox[{"ALUParityFlag", " ", "=", " ", "0"}]}], "]"}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"ARegister", " ", "=", " ", "sum"}], ";"}]}], 
+    "\[IndentingNewLine]", "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"Substract", "[", "]"}], ":=", 
+   RowBox[{"Block", "[", 
+    RowBox[{
+     RowBox[{"{", "sub", "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"sub", " ", "=", " ", 
+       RowBox[{"IntegerDigits", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"FromDigits", "[", 
+           RowBox[{"ARegister", ",", "2"}], "]"}], "-", 
+          RowBox[{"FromDigits", "[", 
+           RowBox[{"ARegister", ",", "2"}], "]"}]}], ",", "2"}], "]"}]}], ";",
+       "\[IndentingNewLine]", 
+      RowBox[{"ALUOverflowFlag", " ", "=", " ", "0"}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{"sub", " ", "<", " ", "0"}], ",", 
+        RowBox[{"ALUNegativeFlag", " ", "=", " ", "1"}], ",", 
+        RowBox[{"ALUNegativeFlag", " ", "=", " ", "0"}]}], "]"}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{"sub", " ", "==", " ", "0"}], ",", 
+        RowBox[{"ALUZeroFlag", " ", "=", " ", "1"}], ",", 
+        RowBox[{"ALUZeroFlag", " ", "=", " ", "0"}]}], "]"}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{"EvenQ", "[", "sub", "]"}], ",", 
+        RowBox[{"ALUParityFlag", " ", "=", " ", "1"}], ",", " ", 
+        RowBox[{"ALUParityFlag", " ", "=", " ", "0"}]}], "]"}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"ARegister", " ", "=", " ", "sub"}], ";"}]}], 
+    "\[IndentingNewLine]", "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"UIncrement", "[", "]"}], ":=", 
+   RowBox[{"Block", "[", 
+    RowBox[{
+     RowBox[{"{", "sum", "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"sum", " ", "=", " ", 
+       RowBox[{"IntegerDigits", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"FromDigits", "[", 
+           RowBox[{"ARegister", ",", "2"}], "]"}], "+", "1"}], ",", "2"}], 
+        "]"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"ALUNegativeFlag", " ", "=", " ", "0"}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{"sum", " ", ">", " ", "255"}], ",", 
+        RowBox[{"ALUOverflowFlag", " ", "=", " ", "1"}], ",", 
+        RowBox[{"ALUOverflowFlag", " ", "=", " ", "0"}]}], "]"}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{"EvenQ", "[", "sum", "]"}], ",", 
+        RowBox[{"ALUParityFlag", " ", "=", " ", "1"}], ",", " ", 
+        RowBox[{"ALUParityFlag", " ", "=", " ", "0"}]}], "]"}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"ARegister", " ", "=", " ", "sum"}], ";"}]}], 
+    "\[IndentingNewLine]", "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"Jump", "[", "address_", "]"}], ":=", 
+   RowBox[{"(", 
+    RowBox[{"addressRegister", " ", "=", " ", "address"}], ")"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"JumpNeg", "[", "address_", "]"}], ":=", 
+   RowBox[{"If", "[", 
+    RowBox[{
+     RowBox[{"ALUNegativeFlag", "\[Equal]", "1"}], ",", 
+     RowBox[{"addressRegister", " ", "=", " ", "address"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"JumpZero", "[", "address_", "]"}], ":=", 
+   RowBox[{"If", "[", 
+    RowBox[{
+     RowBox[{"ALUZeroFlag", "\[Equal]", "1"}], ",", 
+     RowBox[{"addressRegister", " ", "=", " ", "address"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"PrintA", "[", "]"}], ":=", 
+    RowBox[{"Print", "[", 
+     RowBox[{"FromDigits", "[", 
+      RowBox[{"ARegister", ",", "2"}], "]"}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]", "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"CPU", "[", "]"}], ":=", 
+  RowBox[{"Block", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"instruction", ",", "param"}], "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"instructionRegister", " ", "=", " ", 
+      RowBox[{"Part", "[", 
+       RowBox[{"RAM", ",", 
+        RowBox[{
+         RowBox[{"FromDigits", "[", 
+          RowBox[{"addressRegister", ",", "2"}], "]"}], "+", "1"}]}], "]"}]}],
+      ";", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"instruction", ",", "param"}], "}"}], " ", "=", " ", 
+      RowBox[{"TakeDrop", "[", 
+       RowBox[{"instructionRegister", ",", "4"}], "]"}]}], ";", 
+     "\[IndentingNewLine]", "\[IndentingNewLine]", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{"instruction", " ", "\[Equal]", " ", 
+        RowBox[{"OpcodeLoadA", "[", "]"}]}], ",", " ", 
+       RowBox[{"LoadA", "[", "param", "]"}]}], "]"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{"instruction", " ", "\[Equal]", " ", 
+        RowBox[{"OpcodeLoadB", "[", "]"}]}], ",", " ", 
+       RowBox[{"LoadB", "[", "param", "]"}]}], "]"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{"instruction", " ", "\[Equal]", " ", 
+        RowBox[{"OpcodeStoreA", "[", "]"}]}], ",", " ", 
+       RowBox[{"StoreA", "[", "param", "]"}]}], "]"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{"instruction", " ", "\[Equal]", " ", 
+        RowBox[{"OpcodeStoreB", "[", "]"}]}], ",", " ", 
+       RowBox[{"StoreB", "[", "param", "]"}]}], "]"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{"instruction", " ", "\[Equal]", " ", 
+        RowBox[{"OpcodeAdd", "[", "]"}]}], ",", " ", 
+       RowBox[{"Add", "[", "]"}]}], "]"}], ";", "\[IndentingNewLine]", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{"instruction", " ", "\[Equal]", " ", 
+        RowBox[{"OpcodeSubstract", "[", "]"}]}], ",", " ", 
+       RowBox[{"Substract", "[", "]"}]}], "]"}], ";", "\[IndentingNewLine]", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{"instruction", " ", "\[Equal]", " ", 
+        RowBox[{"OpcodeIncrement", "[", "]"}]}], ",", " ", 
+       RowBox[{"UIncrement", "[", "]"}]}], "]"}], ";", "\[IndentingNewLine]", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{"instruction", " ", "\[Equal]", " ", 
+        RowBox[{"OpcodeJump", "[", "]"}]}], ",", " ", 
+       RowBox[{"Jump", "[", "param", "]"}]}], "]"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{"instruction", " ", "\[Equal]", " ", 
+        RowBox[{"OpcodeJumpNeg", "[", "]"}]}], ",", " ", 
+       RowBox[{"JumpNeg", "[", "param", "]"}]}], "]"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{"instruction", " ", "\[Equal]", " ", 
+        RowBox[{"OpcodeJumpZero", "[", "]"}]}], ",", " ", 
+       RowBox[{"JumpZero", "[", "param", "]"}]}], "]"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{"instruction", " ", "\[Equal]", " ", 
+        RowBox[{"OpcodePrint", "[", "]"}]}], ",", " ", 
+       RowBox[{"PrintA", "[", "]"}]}], "]"}], ";", "\[IndentingNewLine]", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{"instruction", " ", "\[Equal]", " ", 
+        RowBox[{"OpcodeHalt", "[", "]"}]}], ",", " ", 
+       RowBox[{"Halt", "[", "]"}]}], "]"}], ";", "\[IndentingNewLine]", 
+     "\[IndentingNewLine]", 
+     RowBox[{"IntegerDigits", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"FromDigits", "[", 
+         RowBox[{"addressRegister", ",", "2"}], "]"}], "+", "1"}], ",", "2"}],
+       "]"}]}]}], "\[IndentingNewLine]", "]"}]}]}], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.763329259062766*^9, 3.7633295419599943`*^9}, {
+  3.763329579143072*^9, 3.7633296067043533`*^9}, {3.7633297806707*^9, 
+  3.763330060687312*^9}, {3.7633301073184013`*^9, 3.7633302340148315`*^9}, {
+  3.763330329143016*^9, 3.7633304148237658`*^9}, {3.763330454814777*^9, 
+  3.763330498030458*^9}, {3.763330534197881*^9, 3.763330573894475*^9}, {
+  3.7633306131340237`*^9, 3.763330620437867*^9}, {3.763330655030379*^9, 
+  3.7633306699343104`*^9}, {3.7633307837022386`*^9, 
+  3.763330799541562*^9}},ExpressionUUID->"9f2fa46c-916b-449a-ac8a-\
+5917115f5d70"],
+
+Cell[BoxData[
+ RowBox[{"CPU", "[", "]"}]], "Input",
+ CellChangeTimes->{{3.7633307502149305`*^9, 
+  3.763330751404087*^9}},ExpressionUUID->"de9f6036-77b7-4a9e-b317-\
+f0d907e7a29f"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"CPUPlot", "[", "]"}]], "Input",
+ CellChangeTimes->{3.763330759007395*^9},
+ CellLabel->
+  "In[110]:=",ExpressionUUID->"62e4e8d3-db75-48aa-a440-8d7632ad7c6f"],
+
+Cell[BoxData[
+ TemplateBox[{PanelBox[
+    TagBox[
+     GridBox[{{
+        TemplateBox[{
+          PanelBox[
+           TagBox[
+            
+            GridBox[{{"\"Overflow: \"", "0"}, {"\"Negative: \"", "0"}, {
+              "\"Zero: \"", "0"}, {"\"Parity: \"", "0"}}, AutoDelete -> False,
+              GridBoxBackground -> {"Columns" -> {
+                 RGBColor[1, 0.85, 0.85]}, "Rows" -> {{None}}}, 
+             GridBoxFrame -> {"Columns" -> {{True}}, "Rows" -> {{True}}}, 
+             GridBoxItemSize -> {
+              "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}], "Grid"]], 
+          StyleBox["\"ALU Status\"", Bold, StripOnInput -> False]}, "Labeled",
+          DisplayFunction -> (GridBox[{{
+             
+             ItemBox[#2, Alignment -> {Left, Inherited}, DefaultBaseStyle -> 
+              "PanelLabel"]}, {
+             TagBox[
+              ItemBox[
+               PaneBox[
+                TagBox[#, "SkipImageSizeLevel"], 
+                Alignment -> {Center, Baseline}, BaselinePosition -> 
+                Baseline], DefaultBaseStyle -> "Labeled"], 
+              "SkipImageSizeLevel"]}}, 
+           GridBoxAlignment -> {
+            "Columns" -> {{Center}}, "Rows" -> {{Center}}}, AutoDelete -> 
+           False, GridBoxItemSize -> {
+            "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+           BaselinePosition -> {2, 1}]& ), 
+         InterpretationFunction -> (RowBox[{"Labeled", "[", 
+            RowBox[{#, ",", 
+              RowBox[{"{", #2, "}"}], ",", 
+              RowBox[{"{", 
+                RowBox[{"{", 
+                  RowBox[{"Top", ",", "Left"}], "}"}], "}"}], ",", 
+              RowBox[{"DefaultLabelStyle", "\[Rule]", "\"PanelLabel\""}], ",", 
+              RowBox[{"LabelStyle", "\[Rule]", 
+                RowBox[{"{", "}"}]}], ",", 
+              RowBox[{"RotateLabel", "\[Rule]", "False"}], ",", 
+              RowBox[{"Spacings", "\[Rule]", "Automatic"}]}], "]"}]& )], 
+        TemplateBox[{
+          PanelBox[
+           TagBox[
+            GridBox[{{
+               TagBox[
+                GridBox[{{"\"Register A\"", "\"Register B\""}, {
+                   TemplateBox[{"0", "0", "0", "0", "0", "0", "0", "0"}, 
+                    "RowDefault"], 
+                   
+                   TemplateBox[{"0", "0", "0", "0", "0", "0", "0", "0"}, 
+                    "RowDefault"]}}, AutoDelete -> False, 
+                 GridBoxBackground -> {"Columns" -> {{None}}, "Rows" -> {
+                    RGBColor[0.88, 1, 0.88]}}, 
+                 GridBoxFrame -> {"Columns" -> {{True}}, "Rows" -> {{True}}}, 
+                 GridBoxItemSize -> {
+                  "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}], 
+                "Grid"]}, {
+               TagBox[
+                
+                GridBox[{{
+                  "\"Instruction Register\"", "\"Address Register\""}, {
+                   TagBox[
+                    GridBox[{{"\"Opcode\"", "\"Parameter\""}, {
+                    TemplateBox[{"0", "0", "1", "0"}, "RowDefault"], 
+                    TemplateBox[{"1", "1", "1", "0"}, "RowDefault"]}, {
+                    "\"LoadA\"", 
+                    TagBox[
+                    InterpretationBox[
+                    SubscriptBox["\"e\"", "\"16\""], 14, Editable -> False], 
+                    BaseForm[#, 16]& ]}}, AutoDelete -> False, 
+                    GridBoxBackground -> {"Columns" -> {{None}}, "Rows" -> {
+                    RGBColor[0.9, 1, 1]}}, 
+                    GridBoxFrame -> {
+                    "Columns" -> {{True}}, "Rows" -> {{True}}}, 
+                    GridBoxItemSize -> {
+                    "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}], 
+                    "Grid"], 
+                   TemplateBox[{"0", "0", "0", "0"}, "RowDefault"]}}, 
+                 AutoDelete -> False, 
+                 GridBoxBackground -> {"Columns" -> {{None}}, "Rows" -> {
+                    RGBColor[0.87, 0.94, 1]}}, 
+                 GridBoxFrame -> {"Columns" -> {{True}}, "Rows" -> {{True}}}, 
+                 GridBoxItemSize -> {
+                  "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}], 
+                "Grid"]}}, GridBoxAlignment -> {"Columns" -> {{Left}}}, 
+             DefaultBaseStyle -> "Column", 
+             GridBoxItemSize -> {
+              "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}], 
+            "Column"], ImageSize -> 250], 
+          StyleBox["\"CU Status\"", Bold, StripOnInput -> False]}, "Labeled", 
+         DisplayFunction -> (GridBox[{{
+             ItemBox[#2, Alignment -> {Left, Inherited}, DefaultBaseStyle -> 
+              "PanelLabel"]}, {
+             TagBox[
+              ItemBox[
+               PaneBox[
+                TagBox[#, "SkipImageSizeLevel"], 
+                Alignment -> {Center, Baseline}, BaselinePosition -> 
+                Baseline], DefaultBaseStyle -> "Labeled"], 
+              "SkipImageSizeLevel"]}}, 
+           GridBoxAlignment -> {
+            "Columns" -> {{Center}}, "Rows" -> {{Center}}}, AutoDelete -> 
+           False, GridBoxItemSize -> {
+            "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+           BaselinePosition -> {2, 1}]& ), 
+         InterpretationFunction -> (RowBox[{"Labeled", "[", 
+            RowBox[{#, ",", 
+              RowBox[{"{", #2, "}"}], ",", 
+              RowBox[{"{", 
+                RowBox[{"{", 
+                  RowBox[{"Top", ",", "Left"}], "}"}], "}"}], ",", 
+              RowBox[{"DefaultLabelStyle", "\[Rule]", "\"PanelLabel\""}], ",", 
+              RowBox[{"LabelStyle", "\[Rule]", 
+                RowBox[{"{", "}"}]}], ",", 
+              RowBox[{"RotateLabel", "\[Rule]", "False"}], ",", 
+              RowBox[{"Spacings", "\[Rule]", "Automatic"}]}], "]"}]& )], 
+        TemplateBox[{
+          PanelBox[
+           TagBox[
+            GridBox[{{"\"Address\"", "\"Value\""}, {"0", 
+               RowBox[{"{", 
+                 
+                 RowBox[{
+                  "0", ",", "0", ",", "1", ",", "0", ",", "1", ",", "1", ",", 
+                   "1", ",", "0"}], "}"}]}, {"1", 
+               RowBox[{"{", 
+                 
+                 RowBox[{
+                  "0", ",", "0", ",", "0", ",", "1", ",", "1", ",", "1", ",", 
+                   "1", ",", "1"}], "}"}]}, {"2", 
+               RowBox[{"{", 
+                 
+                 RowBox[{
+                  "1", ",", "0", ",", "0", ",", "1", ",", "0", ",", "1", ",", 
+                   "0", ",", "0"}], "}"}]}, {"3", 
+               RowBox[{"{", 
+                 
+                 RowBox[{
+                  "1", ",", "1", ",", "0", ",", "1", ",", "0", ",", "1", ",", 
+                   "0", ",", "1"}], "}"}]}, {"4", 
+               RowBox[{"{", 
+                 RowBox[{
+                  "1", ",", "1", ",", "0", ",", "0", ",", "0", ",", "0", ",", 
+                   "1", ",", "0"}], "}"}]}, {"5", 
+               RowBox[{"{", 
+                 
+                 RowBox[{
+                  "1", ",", "0", ",", "0", ",", "0", ",", "0", ",", "1", ",", 
+                   "0", ",", "0"}], "}"}]}, {"6", 
+               RowBox[{"{", 
+                 
+                 RowBox[{
+                  "0", ",", "1", ",", "0", ",", "0", ",", "1", ",", "1", ",", 
+                   "0", ",", "1"}], "}"}]}, {"7", 
+               RowBox[{"{", 
+                 
+                 RowBox[{
+                  "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", 
+                   "0", ",", "0"}], "}"}]}, {"8", 
+               RowBox[{"{", 
+                 
+                 RowBox[{
+                  "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", 
+                   "0", ",", "0"}], "}"}]}, {"9", 
+               RowBox[{"{", 
+                 
+                 RowBox[{
+                  "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", 
+                   "0", ",", "0"}], "}"}]}, {"10", 
+               RowBox[{"{", 
+                 
+                 RowBox[{
+                  "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", 
+                   "0", ",", "0"}], "}"}]}, {"11", 
+               RowBox[{"{", 
+                 
+                 RowBox[{
+                  "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", 
+                   "0", ",", "0"}], "}"}]}, {"12", 
+               RowBox[{"{", 
+                 
+                 RowBox[{
+                  "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", 
+                   "0", ",", "0"}], "}"}]}, {"13", 
+               RowBox[{"{", 
+                 
+                 RowBox[{
+                  "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", 
+                   "0", ",", "0"}], "}"}]}, {"14", 
+               RowBox[{"{", 
+                 
+                 RowBox[{
+                  "0", ",", "1", ",", "1", ",", "0", ",", "1", ",", "1", ",", 
+                   "1", ",", "0"}], "}"}]}, {"15", 
+               RowBox[{"{", 
+                 
+                 RowBox[{
+                  "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "1", ",", 
+                   "0", ",", "1"}], "}"}]}}, AutoDelete -> False, 
+             GridBoxBackground -> {
+              "Columns" -> {{None}}, 
+               "RowsIndexed" -> {
+                1 -> RGBColor[0.88, 1, 0.88], 2 -> RGBColor[1, 1, 0]}}, 
+             GridBoxFrame -> {"Columns" -> {{True}}, "Rows" -> {{True}}}, 
+             GridBoxItemSize -> {
+              "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}], "Grid"]], 
+          StyleBox["\"RAM\"", Bold, StripOnInput -> False]}, "Labeled", 
+         DisplayFunction -> (GridBox[{{
+             
+             ItemBox[#2, Alignment -> {Left, Inherited}, DefaultBaseStyle -> 
+              "PanelLabel"]}, {
+             TagBox[
+              ItemBox[
+               PaneBox[
+                TagBox[#, "SkipImageSizeLevel"], 
+                Alignment -> {Center, Baseline}, BaselinePosition -> 
+                Baseline], DefaultBaseStyle -> "Labeled"], 
+              "SkipImageSizeLevel"]}}, 
+           GridBoxAlignment -> {
+            "Columns" -> {{Center}}, "Rows" -> {{Center}}}, AutoDelete -> 
+           False, GridBoxItemSize -> {
+            "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+           BaselinePosition -> {2, 1}]& ), 
+         InterpretationFunction -> (RowBox[{"Labeled", "[", 
+            RowBox[{#, ",", 
+              RowBox[{"{", #2, "}"}], ",", 
+              RowBox[{"{", 
+                RowBox[{"{", 
+                  RowBox[{"Top", ",", "Left"}], "}"}], "}"}], ",", 
+              RowBox[{"DefaultLabelStyle", "\[Rule]", "\"PanelLabel\""}], ",", 
+              RowBox[{"LabelStyle", "\[Rule]", 
+                RowBox[{"{", "}"}]}], ",", 
+              RowBox[{"RotateLabel", "\[Rule]", "False"}], ",", 
+              RowBox[{"Spacings", "\[Rule]", "Automatic"}]}], "]"}]& )]}}, 
+      GridBoxAlignment -> {"Rows" -> {{Top}}}, AutoDelete -> False, 
+      GridBoxItemSize -> {
+       "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}], "Grid"]],
+   StyleBox["\"CPU\"", Bold, StripOnInput -> False]},
+  "Labeled",
+  DisplayFunction->(GridBox[{{
+      ItemBox[#2, Alignment -> {Left, Inherited}, DefaultBaseStyle -> 
+       "PanelLabel"]}, {
+      TagBox[
+       ItemBox[
+        PaneBox[
+         TagBox[#, "SkipImageSizeLevel"], Alignment -> {Center, Baseline}, 
+         BaselinePosition -> Baseline], DefaultBaseStyle -> "Labeled"], 
+       "SkipImageSizeLevel"]}}, 
+    GridBoxAlignment -> {"Columns" -> {{Center}}, "Rows" -> {{Center}}}, 
+    AutoDelete -> False, 
+    GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+    BaselinePosition -> {2, 1}]& ),
+  InterpretationFunction->(RowBox[{"Labeled", "[", 
+     RowBox[{#, ",", 
+       RowBox[{"{", #2, "}"}], ",", 
+       RowBox[{"{", 
+         RowBox[{"{", 
+           RowBox[{"Top", ",", "Left"}], "}"}], "}"}], ",", 
+       RowBox[{"DefaultLabelStyle", "\[Rule]", "\"PanelLabel\""}], ",", 
+       RowBox[{"LabelStyle", "\[Rule]", 
+         RowBox[{"{", "}"}]}], ",", 
+       RowBox[{"RotateLabel", "\[Rule]", "False"}], ",", 
+       RowBox[{"Spacings", "\[Rule]", "Automatic"}]}], "]"}]& )]], "Output",
+ CellChangeTimes->{
+  3.7633286984212694`*^9, {3.7633287445681667`*^9, 3.7633287522836266`*^9}, {
+   3.7633307390825214`*^9, 3.763330759551377*^9}},
+ CellLabel->
+  "Out[110]=",ExpressionUUID->"baa266af-4115-4b3e-8393-b2f5e780f8ab"]
+}, Open  ]]
+}, Open  ]],
 
 Cell[CellGroupData[{
 
@@ -311,213 +931,364 @@ Cell[BoxData[{
   "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
-   RowBox[{"CUStatusPlot", "[", "]"}], ":=", 
-   RowBox[{"Block", "[", 
-    RowBox[{
-     RowBox[{"{", 
-      RowBox[{
-      "mainRegisters", ",", "instructionRegisters", ",", "flagsStatus"}], 
-      "}"}], ",", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"CUStatusPlot", "[", "]"}], ":=", 
+    RowBox[{"Block", "[", 
      RowBox[{
-      RowBox[{"mainRegisters", " ", "=", " ", 
-       RowBox[{"Grid", "[", "\[IndentingNewLine]", 
-        RowBox[{
-         RowBox[{"{", "\[IndentingNewLine]", 
-          RowBox[{
-           RowBox[{"{", 
-            RowBox[{"\"\<Register A\>\"", ",", "\"\<Register B\>\""}], "}"}], 
-           ",", "\[IndentingNewLine]", 
-           RowBox[{"{", 
-            RowBox[{
-             RowBox[{"Row", "[", 
-              RowBox[{"FromDigits", "[", 
-               RowBox[{"ARegister", ",", "2"}], "]"}], "]"}], ",", 
-             RowBox[{"Row", "[", 
-              RowBox[{"FromDigits", "[", 
-               RowBox[{"BRegister", ",", "2"}], "]"}], "]"}]}], "}"}]}], 
-          "\[IndentingNewLine]", "}"}], ",", "\[IndentingNewLine]", 
-         RowBox[{"Frame", "\[Rule]", "All"}], ",", "\[IndentingNewLine]", 
-         RowBox[{"Background", "\[Rule]", 
-          RowBox[{"{", 
-           RowBox[{"None", ",", 
-            RowBox[{"{", "LightGreen", "}"}]}], "}"}]}]}], 
-        "\[IndentingNewLine]", "]"}]}], ";", "\[IndentingNewLine]", 
-      "\[IndentingNewLine]", 
-      RowBox[{"instructionRegisters", " ", "=", " ", 
-       RowBox[{"Grid", "[", "\[IndentingNewLine]", 
-        RowBox[{
-         RowBox[{"{", "\[IndentingNewLine]", 
-          RowBox[{
-           RowBox[{"{", 
-            RowBox[{
-            "\"\<Instruction Register\>\"", ",", "\"\<Address Register\>\""}],
-             "}"}], ",", "\[IndentingNewLine]", 
-           RowBox[{"{", "\[IndentingNewLine]", 
-            RowBox[{
-             RowBox[{"Grid", "[", "\[IndentingNewLine]", 
-              RowBox[{
-               RowBox[{"{", "\[IndentingNewLine]", 
-                RowBox[{
-                 RowBox[{"{", 
-                  RowBox[{"\"\<Opcode\>\"", ",", "\"\<Parameter\>\""}], "}"}],
-                  ",", "\[IndentingNewLine]", 
-                 RowBox[{"Map", "[", 
-                  RowBox[{"Row", ",", 
-                   RowBox[{"HalfSplit", "[", 
-                    RowBox[{"FromDigits", "[", 
-                    RowBox[{"instructionRegister", ",", "2"}], "]"}], "]"}]}],
-                   "]"}], ",", "\[IndentingNewLine]", 
-                 RowBox[{"{", 
-                  RowBox[{
-                   RowBox[{
-                    RowBox[{"First", "[", 
-                    RowBox[{"HalfSplit", "[", 
-                    RowBox[{"FromDigits", "[", 
-                    RowBox[{"instructionRegister", ",", "2"}], "]"}], "]"}], 
-                    "]"}], "/.", "cpuMnemonics"}], ",", 
-                   RowBox[{"BinaryToHex", "[", 
-                    RowBox[{"Last", "[", 
-                    RowBox[{"HalfSplit", "[", 
-                    RowBox[{"FromDigits", "[", 
-                    RowBox[{"instructionRegister", ",", "2"}], "]"}], "]"}], 
-                    "]"}], "]"}]}], "}"}]}], "\[IndentingNewLine]", "}"}], 
-               ",", "\[IndentingNewLine]", 
-               RowBox[{"Frame", "\[Rule]", "All"}], ",", 
-               RowBox[{"Background", "\[Rule]", 
-                RowBox[{"{", 
-                 RowBox[{"None", ",", 
-                  RowBox[{"{", "LightCyan", "}"}]}], "}"}]}]}], 
-              "\[IndentingNewLine]", "]"}], ",", "\[IndentingNewLine]", 
-             RowBox[{"Row", "[", 
-              RowBox[{"FromDigits", "[", 
-               RowBox[{"addressRegister", ",", "2"}], "]"}], "]"}]}], 
-            "\[IndentingNewLine]", "}"}]}], "\[IndentingNewLine]", "}"}], ",",
-          "\[IndentingNewLine]", 
-         RowBox[{"Frame", "\[Rule]", "All"}], ",", "\[IndentingNewLine]", 
-         RowBox[{"Background", "\[Rule]", 
-          RowBox[{"{", 
-           RowBox[{"None", ",", 
-            RowBox[{"{", "LightBlue", "}"}]}], "}"}]}]}], 
-        "\[IndentingNewLine]", "]"}]}], ";", "\[IndentingNewLine]", 
-      RowBox[{"Panel", "[", 
+      RowBox[{"{", 
        RowBox[{
-        RowBox[{"Column", "[", 
-         RowBox[{"{", 
-          RowBox[{"mainRegisters", ",", "instructionRegisters"}], "}"}], 
-         "]"}], ",", 
-        RowBox[{"Style", "[", 
-         RowBox[{"\"\<CU Status\>\"", ",", "Bold"}], "]"}], ",", 
-        RowBox[{"ImageSize", "\[Rule]", "250"}]}], "]"}]}]}], 
-    "\[IndentingNewLine]", "]"}]}], ";"}]}], "Input",
+       "mainRegisters", ",", "instructionRegisters", ",", "flagsStatus"}], 
+       "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"mainRegisters", " ", "=", " ", 
+        RowBox[{"Grid", "[", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"{", "\[IndentingNewLine]", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{"\"\<Register A\>\"", ",", "\"\<Register B\>\""}], "}"}],
+             ",", "\[IndentingNewLine]", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"Row", "[", "ARegister", "]"}], ",", 
+              RowBox[{"Row", "[", "BRegister", "]"}]}], "}"}]}], 
+           "\[IndentingNewLine]", "}"}], ",", "\[IndentingNewLine]", 
+          RowBox[{"Frame", "\[Rule]", "All"}], ",", "\[IndentingNewLine]", 
+          RowBox[{"Background", "\[Rule]", 
+           RowBox[{"{", 
+            RowBox[{"None", ",", 
+             RowBox[{"{", "LightGreen", "}"}]}], "}"}]}]}], 
+         "\[IndentingNewLine]", "]"}]}], ";", "\[IndentingNewLine]", 
+       "\[IndentingNewLine]", 
+       RowBox[{"instructionRegisters", " ", "=", " ", 
+        RowBox[{"Grid", "[", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"{", "\[IndentingNewLine]", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{
+             "\"\<Instruction Register\>\"", ",", 
+              "\"\<Address Register\>\""}], "}"}], ",", "\[IndentingNewLine]", 
+            RowBox[{"{", "\[IndentingNewLine]", 
+             RowBox[{
+              RowBox[{"Grid", "[", "\[IndentingNewLine]", 
+               RowBox[{
+                RowBox[{"{", "\[IndentingNewLine]", 
+                 RowBox[{
+                  RowBox[{"{", 
+                   RowBox[{"\"\<Opcode\>\"", ",", "\"\<Parameter\>\""}], 
+                   "}"}], ",", "\[IndentingNewLine]", 
+                  RowBox[{"Map", "[", 
+                   RowBox[{"Row", ",", 
+                    RowBox[{"HalfSplit", "[", "instructionRegister", "]"}]}], 
+                   "]"}], ",", "\[IndentingNewLine]", 
+                  RowBox[{"{", 
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{"First", "[", 
+                    RowBox[{"HalfSplit", "[", "instructionRegister", "]"}], 
+                    "]"}], "/.", "cpuMnemonics"}], ",", 
+                    RowBox[{"BinaryToHex", "[", 
+                    RowBox[{"Last", "[", 
+                    RowBox[{"HalfSplit", "[", "instructionRegister", "]"}], 
+                    "]"}], "]"}]}], "}"}]}], "\[IndentingNewLine]", "}"}], 
+                ",", "\[IndentingNewLine]", 
+                RowBox[{"Frame", "\[Rule]", "All"}], ",", 
+                RowBox[{"Background", "\[Rule]", 
+                 RowBox[{"{", 
+                  RowBox[{"None", ",", 
+                   RowBox[{"{", "LightCyan", "}"}]}], "}"}]}]}], 
+               "\[IndentingNewLine]", "]"}], ",", "\[IndentingNewLine]", 
+              RowBox[{"Row", "[", "addressRegister", "]"}]}], 
+             "\[IndentingNewLine]", "}"}]}], "\[IndentingNewLine]", "}"}], 
+          ",", "\[IndentingNewLine]", 
+          RowBox[{"Frame", "\[Rule]", "All"}], ",", "\[IndentingNewLine]", 
+          RowBox[{"Background", "\[Rule]", 
+           RowBox[{"{", 
+            RowBox[{"None", ",", 
+             RowBox[{"{", "LightBlue", "}"}]}], "}"}]}]}], 
+         "\[IndentingNewLine]", "]"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"Panel", "[", 
+        RowBox[{
+         RowBox[{"Column", "[", 
+          RowBox[{"{", 
+           RowBox[{"mainRegisters", ",", "instructionRegisters"}], "}"}], 
+          "]"}], ",", 
+         RowBox[{"Style", "[", 
+          RowBox[{"\"\<CU Status\>\"", ",", "Bold"}], "]"}], ",", 
+         RowBox[{"ImageSize", "\[Rule]", "250"}]}], "]"}]}]}], 
+     "\[IndentingNewLine]", "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"CPUPlot", "[", "]"}], ":=", 
+   RowBox[{"Panel", "[", 
+    RowBox[{
+     RowBox[{"Grid", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"ALUStatusPlot", "[", "]"}], ",", 
+          RowBox[{"CUStatusPlot", "[", "]"}], ",", 
+          RowBox[{"PlotRAM", "[", "]"}]}], "}"}], "}"}], ",", 
+       RowBox[{"Alignment", "\[Rule]", "Top"}]}], "]"}], ",", 
+     RowBox[{"Style", "[", 
+      RowBox[{"\"\<CPU\>\"", ",", "Bold"}], "]"}]}], "]"}]}], ";"}]}], "Input",
  InitializationCell->True,
  CellChangeTimes->{{3.76316837360786*^9, 3.763168393051777*^9}, {
   3.763168462172127*^9, 3.7631684748603067`*^9}, {3.763168552759014*^9, 
   3.763168565074505*^9}, {3.763168597148697*^9, 3.763168608321679*^9}, {
   3.763168645108296*^9, 3.7631686925124817`*^9}, {3.763168723855712*^9, 
   3.7631687393747787`*^9}, {3.763168773369133*^9, 3.763168774187455*^9}, {
-  3.763168807948228*^9, 3.763168809158249*^9}},
- CellLabel->
-  "In[103]:=",ExpressionUUID->"f96115bf-24f4-4098-8ad5-aa74873b70a2"],
+  3.763168807948228*^9, 3.763168809158249*^9}, {3.7633275633731785`*^9, 
+  3.76332756639715*^9}, {3.763327642772933*^9, 3.763327649468577*^9}, {
+  3.7633277001559687`*^9, 3.7633277005079136`*^9}, {3.763327738932082*^9, 
+  3.7633277399261928`*^9}},
+ CellLabel->"In[45]:=",ExpressionUUID->"f96115bf-24f4-4098-8ad5-aa74873b70a2"]
+}, Open  ]],
 
 Cell[CellGroupData[{
 
-Cell[BoxData[
- RowBox[{"CUStatusPlot", "[", "]"}]], "Input",
- CellLabel->
-  "In[108]:=",ExpressionUUID->"3d2edefb-2bde-440a-b685-87dc46bb701b"],
+Cell["Compilar desde ensamblador", "Subchapter",
+ CellChangeTimes->{{3.730039152456098*^9, 
+  3.730039171872147*^9}},ExpressionUUID->"07557408-e615-4536-93bc-\
+8c8c106b6ee2"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"assemblyOpcodes", " ", "=", " ", 
+   RowBox[{"Map", "[", 
+    RowBox[{"Reverse", ",", "cpuMnemonics"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"HexToBinary", "[", 
+    RowBox[{"n_", ",", 
+     RowBox[{"pad_:", "4"}]}], "]"}], ":=", 
+   RowBox[{"PadLeft", "[", 
+    RowBox[{
+     RowBox[{"IntegerDigits", "[", 
+      RowBox[{
+       RowBox[{"FromDigits", "[", 
+        RowBox[{"n", ",", "16"}], "]"}], ",", "2"}], "]"}], ",", "pad"}], 
+    "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"DecToBinary", "[", 
+    RowBox[{"n_", ",", 
+     RowBox[{"pad_:", "4"}]}], "]"}], ":=", 
+   RowBox[{"PadLeft", "[", 
+    RowBox[{
+     RowBox[{"IntegerDigits", "[", 
+      RowBox[{
+       RowBox[{"FromDigits", "[", 
+        RowBox[{"n", ",", "10"}], "]"}], ",", "2"}], "]"}], ",", "pad"}], 
+    "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"BinaryToHex", "[", "n_", "]"}], ":=", 
+   RowBox[{"BaseForm", "[", 
+    RowBox[{
+     RowBox[{"FromDigits", "[", 
+      RowBox[{"n", ",", "2"}], "]"}], ",", "16"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"FromInstructionToBitcode", "[", "instruction_", "]"}], ":=", " ", 
+   RowBox[{"Switch", "[", 
+    RowBox[{
+     RowBox[{"Length", "[", 
+      RowBox[{"Rest", "[", "instruction", "]"}], "]"}], ",", 
+     "\[IndentingNewLine]", "0", ",", 
+     RowBox[{"Join", "[", 
+      RowBox[{
+       RowBox[{"First", "[", "instruction", "]"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0", ",", "0", ",", "0"}], "}"}]}], "]"}], ",", 
+     "\[IndentingNewLine]", "1", ",", 
+     RowBox[{"Join", "[", 
+      RowBox[{
+       RowBox[{"First", "[", "instruction", "]"}], ",", 
+       RowBox[{"DecToBinary", "[", 
+        RowBox[{"Last", "[", "instruction", "]"}], "]"}]}], "]"}], ",", 
+     "\[IndentingNewLine]", "2", ",", 
+     RowBox[{"Join", "[", 
+      RowBox[{
+       RowBox[{"First", "[", "instruction", "]"}], ",", 
+       RowBox[{"DecToBinary", "[", 
+        RowBox[{
+         RowBox[{"Part", "[", 
+          RowBox[{"instruction", ",", "2"}], "]"}], ",", "2"}], "]"}], ",", 
+       RowBox[{"DecToBinary", "[", 
+        RowBox[{
+         RowBox[{"Part", "[", 
+          RowBox[{"instruction", ",", "3"}], "]"}], ",", "2"}], "]"}]}], 
+      "]"}]}], "\[IndentingNewLine]", "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"FromInstructionTableToBitcode", "[", "code_", "]"}], ":=", 
+   RowBox[{"Map", "[", 
+    RowBox[{"FromInstructionToBitcode", ",", 
+     RowBox[{"ReplaceAll", "[", 
+      RowBox[{
+       RowBox[{"Map", "[", 
+        RowBox[{"StringSplit", ",", 
+         RowBox[{"StringSplit", "[", 
+          RowBox[{"code", ",", "\"\<\\n\>\""}], "]"}]}], "]"}], ",", " ", 
+       "assemblyOpcodes"}], "]"}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"AssemblyCompile", "[", "code_", "]"}], ":=", 
+   RowBox[{"PadRight", "[", 
+    RowBox[{
+     RowBox[{"FromInstructionTableToBitcode", "[", "code", "]"}], ",", "16", 
+     ",", 
+     RowBox[{"{", 
+      RowBox[{"{", 
+       RowBox[{
+       "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", 
+        "0"}], "}"}], "}"}]}], "]"}]}], ";"}]}], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.729781144436797*^9, 3.729781178021504*^9}, {
+   3.72978121250463*^9, 3.7297812238099957`*^9}, {3.7297812771390944`*^9, 
+   3.729781281561756*^9}, 3.729781575348008*^9, {3.729788059446959*^9, 
+   3.729788077590439*^9}, {3.729788166984494*^9, 3.729788168157321*^9}, {
+   3.730033409866946*^9, 3.730033411310465*^9}, {3.730033458988665*^9, 
+   3.730033514855329*^9}, {3.730035007289137*^9, 3.730035007765923*^9}, {
+   3.730035296266037*^9, 3.7300353028661737`*^9}, 3.730035465432899*^9, {
+   3.730035571018552*^9, 3.730035571138063*^9}, {3.730035625732079*^9, 
+   3.730035656586376*^9}, 3.730035729938738*^9, {3.730035801313764*^9, 
+   3.730035829876705*^9}, {3.730158313014984*^9, 3.730158313824739*^9}, {
+   3.730162939582129*^9, 3.730162942147251*^9}},
+ CellLabel->"In[56]:=",ExpressionUUID->"505d33f4-e5a8-4015-b5da-265cd9f72fbd"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Test", "Chapter",
+ CellChangeTimes->{{3.763327949705067*^9, 
+  3.7633279504256186`*^9}},ExpressionUUID->"4418f0cb-16f7-4574-90f7-\
+ba19f37bf4de"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{
+   "code", " ", "=", " ", 
+    "\"\<\nLoadA 14\nLoadB 15\nSubstract 1 0\nJumpNeg 5\nJump 2\nAdd 1 0\n\
+StoreA 13\nHalt\n\>\""}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"program", " ", "=", " ", 
+   RowBox[{"AssemblyCompile", "[", "code", "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"setValues", " ", "=", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"15", ",", 
+       RowBox[{"DecToBinary", "[", 
+        RowBox[{"\"\<110\>\"", ",", "8"}], "]"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"16", ",", 
+       RowBox[{"DecToBinary", "[", 
+        RowBox[{"\"\<5\>\"", ",", "8"}], "]"}]}], "}"}]}], "}"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"MapThread", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"Part", "[", 
+        RowBox[{"program", ",", "#1"}], "]"}], "=", "#2"}], ")"}], "&"}], ",", 
+    RowBox[{"Transpose", "[", "setValues", "]"}]}], "]"}], ";"}]}], "Input",
+ CellChangeTimes->{3.763327745515428*^9, 3.763327957482938*^9},
+ CellLabel->"In[63]:=",ExpressionUUID->"3d2edefb-2bde-440a-b685-87dc46bb701b"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData["program"], "Input",
+ CellLabel->"In[67]:=",ExpressionUUID->"a3cd788b-aa53-4590-8670-a230c0f91baa"],
 
 Cell[BoxData[
- TemplateBox[{PanelBox[
-    TagBox[
-     GridBox[{{
-        TagBox[
-         GridBox[{{"\"Register A\"", "\"Register B\""}, {
-            RowBox[{"Row", "[", "0", "]"}], 
-            RowBox[{"Row", "[", "0", "]"}]}}, AutoDelete -> False, 
-          GridBoxBackground -> {"Columns" -> {{None}}, "Rows" -> {
-              RGBColor[0.88, 1, 0.88]}}, 
-          GridBoxFrame -> {"Columns" -> {{True}}, "Rows" -> {{True}}}, 
-          GridBoxItemSize -> {
-           "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}], "Grid"]}, {
-        TagBox[
-         GridBox[{{"\"Instruction Register\"", "\"Address Register\""}, {
-            TagBox[
-             GridBox[{{"\"Opcode\"", "\"Parameter\""}, {
-                RowBox[{"Row", "[", 
-                  RowBox[{"Take", "[", 
-                    RowBox[{"0", ",", "0"}], "]"}], "]"}], 
-                RowBox[{"Row", "[", 
-                  RowBox[{"Drop", "[", 
-                    RowBox[{"0", ",", "0"}], "]"}], "]"}]}, {
-                RowBox[{"Take", "[", 
-                  RowBox[{"0", ",", "0"}], "]"}], 
-                TagBox[
-                 RowBox[{"FromDigits", "[", 
-                   RowBox[{
-                    RowBox[{"Drop", "[", 
-                    RowBox[{
-                    InterpretationBox[
-                    SubscriptBox["\"0\"", "\"16\""], 0, Editable -> False], 
-                    ",", 
-                    InterpretationBox[
-                    SubscriptBox["\"0\"", "\"16\""], 0, Editable -> False]}], 
-                    "]"}], ",", 
-                    InterpretationBox[
-                    SubscriptBox["\"2\"", "\"16\""], 2, Editable -> False]}], 
-                   "]"}], BaseForm[#, 16]& ]}}, AutoDelete -> False, 
-              GridBoxBackground -> {"Columns" -> {{None}}, "Rows" -> {
-                  RGBColor[0.9, 1, 1]}}, 
-              GridBoxFrame -> {"Columns" -> {{True}}, "Rows" -> {{True}}}, 
-              GridBoxItemSize -> {
-               "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}], "Grid"], 
-            RowBox[{"Row", "[", "0", "]"}]}}, AutoDelete -> False, 
-          GridBoxBackground -> {"Columns" -> {{None}}, "Rows" -> {
-              RGBColor[0.87, 0.94, 1]}}, 
-          GridBoxFrame -> {"Columns" -> {{True}}, "Rows" -> {{True}}}, 
-          GridBoxItemSize -> {
-           "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}], "Grid"]}}, 
-      GridBoxAlignment -> {"Columns" -> {{Left}}}, DefaultBaseStyle -> 
-      "Column", 
-      GridBoxItemSize -> {
-       "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}], "Column"], 
-    ImageSize -> 250],StyleBox["\"CU Status\"", Bold, StripOnInput -> False]},
-  
-  "Labeled",
-  DisplayFunction->(GridBox[{{
-      ItemBox[#2, Alignment -> {Left, Inherited}, DefaultBaseStyle -> 
-       "PanelLabel"]}, {
-      TagBox[
-       ItemBox[
-        PaneBox[
-         TagBox[#, "SkipImageSizeLevel"], Alignment -> {Center, Baseline}, 
-         BaselinePosition -> Baseline], DefaultBaseStyle -> "Labeled"], 
-       "SkipImageSizeLevel"]}}, 
-    GridBoxAlignment -> {"Columns" -> {{Center}}, "Rows" -> {{Center}}}, 
-    AutoDelete -> False, 
-    GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
-    BaselinePosition -> {2, 1}]& ),
-  InterpretationFunction->(RowBox[{"Labeled", "[", 
-     RowBox[{#, ",", 
-       RowBox[{"{", #2, "}"}], ",", 
-       RowBox[{"{", 
-         RowBox[{"{", 
-           RowBox[{"Top", ",", "Left"}], "}"}], "}"}], ",", 
-       RowBox[{"DefaultLabelStyle", "\[Rule]", "\"PanelLabel\""}], ",", 
-       RowBox[{"LabelStyle", "\[Rule]", 
-         RowBox[{"{", "}"}]}], ",", 
-       RowBox[{"RotateLabel", "\[Rule]", "False"}], ",", 
-       RowBox[{"Spacings", "\[Rule]", "Automatic"}]}], "]"}]& )]], "Output",
- CellChangeTimes->{3.763168743681827*^9, 3.76316877838406*^9, 
-  3.763168859767818*^9},
- CellLabel->
-  "Out[108]=",ExpressionUUID->"6e2a47d5-d669-424a-b897-7781bbf08e10"]
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+    "0", ",", "0", ",", "1", ",", "0", ",", "1", ",", "1", ",", "1", ",", 
+     "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+    "0", ",", "0", ",", "0", ",", "1", ",", "1", ",", "1", ",", "1", ",", 
+     "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+    "1", ",", "0", ",", "0", ",", "1", ",", "0", ",", "1", ",", "0", ",", 
+     "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+    "1", ",", "1", ",", "0", ",", "1", ",", "0", ",", "1", ",", "0", ",", 
+     "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+    "1", ",", "1", ",", "0", ",", "0", ",", "0", ",", "0", ",", "1", ",", 
+     "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+    "1", ",", "0", ",", "0", ",", "0", ",", "0", ",", "1", ",", "0", ",", 
+     "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+    "0", ",", "1", ",", "0", ",", "0", ",", "1", ",", "1", ",", "0", ",", 
+     "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+    "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", 
+     "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+    "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", 
+     "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+    "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", 
+     "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+    "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", 
+     "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+    "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", 
+     "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+    "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", 
+     "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+    "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", 
+     "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+    "0", ",", "1", ",", "1", ",", "0", ",", "1", ",", "1", ",", "1", ",", 
+     "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+    "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "1", ",", "0", ",", 
+     "1"}], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{3.763327969685047*^9},
+ CellLabel->"Out[67]=",ExpressionUUID->"05e8d5b7-f77a-4df8-8aec-bad6b74a8178"]
 }, Open  ]]
 }, Open  ]]
 }, Open  ]]
 },
 WindowSize->{1920, 1021},
 WindowMargins->{{0, Automatic}, {0, Automatic}},
-FrontEndVersion->"11.3 for Linux x86 (64-bit) (March 6, 2018)",
+FrontEndVersion->"11.3 para Microsoft Windows (64-bit) (March 6, 2018)",
 StyleDefinitions->"Default.nb"
 ]
 (* End of Notebook Content *)
@@ -532,24 +1303,50 @@ CellTagsIndex->{}
 (*NotebookFileOutline
 Notebook[{
 Cell[CellGroupData[{
-Cell[580, 22, 161, 3, 99, "Title",ExpressionUUID->"a8c0869c-6cd1-4f5d-a572-55dca400baa3"],
-Cell[744, 27, 4367, 120, 439, "Input",ExpressionUUID->"657859b2-85a2-4028-b118-ad23bfbdf18a",
- InitializationCell->True],
-Cell[5114, 149, 1929, 51, 301, "Input",ExpressionUUID->"4e0e0cbd-e4e7-488d-9aee-1fe03c789fba",
- InitializationCell->True],
+Cell[580, 22, 161, 3, 96, "Title",ExpressionUUID->"a8c0869c-6cd1-4f5d-a572-55dca400baa3"],
 Cell[CellGroupData[{
-Cell[7068, 204, 156, 3, 65, "Subchapter",ExpressionUUID->"cfddc2f7-1321-4bfc-9f7b-0a095041589f"],
-Cell[7227, 209, 8743, 210, 1333, "Input",ExpressionUUID->"f96115bf-24f4-4098-8ad5-aa74873b70a2",
+Cell[766, 29, 157, 3, 64, "Subchapter",ExpressionUUID->"20e560d1-f6d5-4dad-905c-1941871e49bd"],
+Cell[926, 34, 4354, 118, 368, "Input",ExpressionUUID->"657859b2-85a2-4028-b118-ad23bfbdf18a",
  InitializationCell->True],
+Cell[5283, 154, 1929, 51, 254, "Input",ExpressionUUID->"4e0e0cbd-e4e7-488d-9aee-1fe03c789fba",
+ InitializationCell->True]
+}, Open  ]],
 Cell[CellGroupData[{
-Cell[15995, 423, 143, 3, 31, "Input",ExpressionUUID->"3d2edefb-2bde-440a-b685-87dc46bb701b"],
-Cell[16141, 428, 3914, 84, 275, "Output",ExpressionUUID->"6e2a47d5-d669-424a-b897-7781bbf08e10"]
+Cell[7249, 210, 179, 3, 64, "Subchapter",ExpressionUUID->"9484df9d-54b3-4fa4-a084-56818bdbb446"],
+Cell[7431, 215, 878, 22, 64, "Input",ExpressionUUID->"d5251ca4-3511-4369-bae0-78b115e2db50",
+ InitializationCell->True]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[8346, 242, 204, 4, 64, "Subchapter",ExpressionUUID->"5e86a4c3-3fba-4318-862b-56359e98ad7e"],
+Cell[8553, 248, 235, 4, 28, "Input",ExpressionUUID->"79028814-0eca-4830-8fd5-b9203e16118a"],
+Cell[8791, 254, 10775, 278, 995, "Input",ExpressionUUID->"9f2fa46c-916b-449a-ac8a-5917115f5d70",
+ InitializationCell->True],
+Cell[19569, 534, 179, 4, 28, "Input",ExpressionUUID->"de9f6036-77b7-4a9e-b317-f0d907e7a29f"],
+Cell[CellGroupData[{
+Cell[19773, 542, 180, 4, 28, "Input",ExpressionUUID->"62e4e8d3-db75-48aa-a440-8d7632ad7c6f"],
+Cell[19956, 548, 12390, 270, 407, "Output",ExpressionUUID->"baa266af-4115-4b3e-8393-b2f5e780f8ab"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[32395, 824, 156, 3, 64, "Subchapter",ExpressionUUID->"cfddc2f7-1321-4bfc-9f7b-0a095041589f"],
+Cell[32554, 829, 9074, 218, 1157, "Input",ExpressionUUID->"f96115bf-24f4-4098-8ad5-aa74873b70a2",
+ InitializationCell->True]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[41665, 1052, 174, 3, 64, "Subchapter",ExpressionUUID->"07557408-e615-4536-93bc-8c8c106b6ee2"],
+Cell[41842, 1057, 4137, 106, 235, "Input",ExpressionUUID->"505d33f4-e5a8-4015-b5da-265cd9f72fbd",
+ InitializationCell->True]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[46016, 1168, 151, 3, 67, "Chapter",ExpressionUUID->"4418f0cb-16f7-4574-90f7-ba19f37bf4de"],
+Cell[46170, 1173, 1203, 35, 276, "Input",ExpressionUUID->"3d2edefb-2bde-440a-b685-87dc46bb701b"],
+Cell[CellGroupData[{
+Cell[47398, 1212, 112, 1, 28, "Input",ExpressionUUID->"a3cd788b-aa53-4590-8670-a230c0f91baa"],
+Cell[47513, 1215, 2254, 68, 52, "Output",ExpressionUUID->"05e8d5b7-f77a-4df8-8aec-bad6b74a8178"]
 }, Open  ]]
 }, Open  ]]
 }, Open  ]]
 }
 ]
 *)
-
-(* End of internal cache information *)
 
