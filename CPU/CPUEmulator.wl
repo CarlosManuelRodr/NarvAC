@@ -453,11 +453,11 @@ InstructionsPanel[machineInstructions_,from_] := Block[{cursor,instructions},
 ];
 InstructionsPlot[code_] := Block[{mi,tabs,currentAddress,currentTab},
     mi = Flatten[MachineInstructions[GetInstructions[code]]];
-    tabs = MapThread[InstructionsPanel, {Partition[mi, UpTo[16]], Range[0, Length[mi], 16]}];
+    tabs = MapThread[InstructionsPanel, {Partition[mi, UpTo[16]], Range[0, Length[mi]-1, 16]}];
 
     currentTab = Ceiling[(BinaryToDecimal[addressRegister]+1)/16];
 
-    Panel[TabView[Thread[Range[0, Length[mi],16]->tabs], currentTab], Style["Program", Bold]]
+    Panel[TabView[Thread[Range[0, Length[mi]-1,16]->tabs], currentTab], Style["Program", Bold]]
 ];
 
 

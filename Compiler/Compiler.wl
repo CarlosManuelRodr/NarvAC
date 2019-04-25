@@ -1355,6 +1355,14 @@ NewVar[] := (currentVar = StringJoin["$", ToString[index++]]);
 CurrentVar[] := currentVar;
 CurrentVar[s_] := StringJoin[s,currentVar];
 
+(* Label name generator *)
+currentLabel = None;
+labelIndex = 0;
+
+ResetLabelGenerator[] := (labelIndex = 0);
+NewLabel[] := (currentLabel = ToString[labelIndex++]);
+CurrentLabel[s_] := StringJoin[currentLabel, "::", s];
+
 LineJoin[l_] := StringJoin[Riffle[DeleteCases[l,""], " "]];
 ColumnJoin[l_] := StringJoin[Riffle[DeleteCases[l,""], "\n"]];
 LabelIdentifier[s_] := StringJoin["<", s, ">"];
@@ -1474,29 +1482,29 @@ grammar = {
     }|>,
     <|"From"->"Statement","To"->{Term["If"], NonTerm["Condition"], Term["Then"], NonTerm["Statement"]},
     "Action"->{
-        "Value" :> NewVar[], 
+        "Value" :> NewLabel[], 
         "TACode" :> 
             ColumnJoin[
                 {
                     NonTerm["Condition"]["TACode"], 
-                    LineJoin[{NonTerm["Condition"]["Conditional"], LabelIdentifier[CurrentVar["L"]]}], 
+                    LineJoin[{NonTerm["Condition"]["Conditional"], LabelIdentifier[CurrentLabel["L"]]}], 
                     NonTerm["Statement"]["TACode"], 
-                    LineJoin[{"label", LabelIdentifier[CurrentVar["L"]]}]
+                    LineJoin[{"label", LabelIdentifier[CurrentLabel["L"]]}]
                 }
             ]
     }|>,
     <|"From"->"Statement", "To"->{Term["While"], NonTerm["Condition"], Term["Do"], NonTerm["Statement"]},
     "Action"->{
-    "Value" :> NewVar[], 
+    "Value" :> NewLabel[], 
     "TACode" :> 
         ColumnJoin[
             {
-                LineJoin[{"label", LabelIdentifier[CurrentVar["L1"]]}], 
+                LineJoin[{"label", LabelIdentifier[CurrentLabel["L1"]]}], 
                 NonTerm["Condition"]["TACode"], 
-                LineJoin[{NonTerm["Condition"]["Conditional"], LabelIdentifier[CurrentVar["L2"]]}], 
+                LineJoin[{NonTerm["Condition"]["Conditional"], LabelIdentifier[CurrentLabel["L2"]]}], 
                 NonTerm["Statement"]["TACode"], 
-                LineJoin[{"goto", LabelIdentifier[CurrentVar["L1"]]}], 
-                LineJoin[{"label", LabelIdentifier[CurrentVar["L2"]]}]
+                LineJoin[{"goto", LabelIdentifier[CurrentLabel["L1"]]}], 
+                LineJoin[{"label", LabelIdentifier[CurrentLabel["L2"]]}]
             }
         ]
     }|>,
@@ -1771,6 +1779,7 @@ SynthesizeTerm[treeSymbol_, synthesizations_] := Block[{eval, new},
 (* ::Input::Initialization:: *)
 SynthesizeTree[parseTree_] := Block[{startSymbol, depthFirstScan, symbolType, synthesized},
     ResetVarGenerator[];
+    ResetLabelGenerator[];
 
     (* Walk the parse tree in post order *)
     startSymbol = parseTree[[1,1,1]];
@@ -1830,23 +1839,32 @@ ProcedureProcessLabels[ic_, from_, to_, globalVar_] := Block[{name, procInstruct
     processed = InsertSequence[processed, tempDeclarations, -2];
     Return[processed];
 ];
+GlobalProcessLabelsAndTemps[ic_] := Block[{procInstructions, tempSymbols, replaceTempSymbolsRules, tempDeclarations, processed},
+   procInstructions = Flatten[ic];
+   tempSymbols = DeleteDuplicates[Select[procInstructions, IsTempQ]];
+   replaceTempSymbolsRules =  Map[# -> StringJoin["<", #, ">"] &, tempSymbols];
+   tempDeclarations = Thread[{"declare_var", replaceTempSymbolsRules[[All, 2]]}];
+   processed = ReplaceAll[ic,  replaceTempSymbolsRules];
+   processed = InsertSequence[processed, tempDeclarations, -2];
+   Return[processed];
+];
 ICProcessLabels[ic_] := Block[{splitted, preProc, pos, parts, processed, postProc, globalVar, allProcessed, procICCode},
     splitted = Map[StringSplit, StringSplit[ic, "\n"]];
     pos = Flatten[Position[splitted, {"begin_proc", _} | {"end_proc", _}]];
     If[pos != {},
-        preProc = Take[splitted, {1, First[pos]-1}];
-        postProc = Take[splitted, {Last[pos]+1, Length[splitted]}];
+        preProc = GlobalProcessLabelsAndTemps[Take[splitted, {1, First[pos]-1}]];
+        postProc = GlobalProcessLabelsAndTemps[Take[splitted, {Last[pos]+1, Length[splitted]}]];
         globalVar = Cases[Join[preProc, postProc], {"declare_var", label_} :> label];
 
         parts = Partition[pos, 2];
         processed = Map[ProcedureProcessLabels[splitted, First[#], Last[#], globalVar]&, parts];
 
         allProcessed = Join[preProc, Concatenate[processed], postProc];
-        procICCode = StringJoin[Riffle[Map[LineJoin, allProcessed], "\n"]];
-        Return[procICCode];
         ,
-        Return[ic];
+        allProcessed = GlobalProcessLabelsAndTemps[splitted];
     ];
+    procICCode = StringJoin[Riffle[Map[LineJoin, allProcessed], "\n"]];
+    Return[procICCode];
 ];
 
 
