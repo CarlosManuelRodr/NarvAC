@@ -10,19 +10,20 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[   2571587,      50978]
-NotebookOptionsPosition[   2569704,      50932]
-NotebookOutlinePosition[   2570038,      50947]
-CellTagsIndexPosition[   2569995,      50944]
+NotebookDataLength[   2571686,      50984]
+NotebookOptionsPosition[   2569798,      50938]
+NotebookOutlinePosition[   2570136,      50953]
+CellTagsIndexPosition[   2570093,      50950]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
 Notebook[{
 
 Cell[CellGroupData[{
-Cell["Compilation and execution example: Emulated", "Title",
- CellChangeTimes->{{3.764337162749892*^9, 
-  3.764337176757475*^9}},ExpressionUUID->"7a3c8e4f-dcbc-4fed-a207-\
+Cell["Compilation and execution example", "Title",
+ CellChangeTimes->{{3.764337162749892*^9, 3.764337176757475*^9}, {
+  3.774379094577404*^9, 
+  3.774379095320581*^9}},ExpressionUUID->"7a3c8e4f-dcbc-4fed-a207-\
 f8f4c29f029b"],
 
 Cell[CellGroupData[{
@@ -159,6 +160,7 @@ Cell[BoxData[
           
           ButtonData:>{
            "Info63765117250-5730634", {"FiniteAutomataPlot", "PL0Compiler`"}},
+          
           ButtonNote->"PL0Compiler`"], 
          ButtonBox["Lint",
           BaseStyle->"InformationLink",
@@ -301,12 +303,14 @@ Cell[BoxData[
          ButtonBox["PlotIC",
           BaseStyle->"InformationLink",
           ButtonData:>{"Info63765117250-5730634", {"PlotIC", "PL0Compiler`"}},
+          
           ButtonNote->"PL0Compiler`"], 
          ButtonBox["RegexConcatenation",
           BaseStyle->"InformationLink",
           
           ButtonData:>{
            "Info63765117250-5730634", {"RegexConcatenation", "PL0Compiler`"}},
+          
           ButtonNote->"PL0Compiler`"], 
          ButtonBox["Token",
           BaseStyle->"InformationLink",
@@ -426,6 +430,7 @@ Cell[BoxData[
           ButtonNote->"PL0Compiler`"], 
          ButtonBox["RegexStar",
           BaseStyle->"InformationLink",
+          
           ButtonData:>{
            "Info63765117250-5730634", {"RegexStar", "PL0Compiler`"}},
           ButtonNote->"PL0Compiler`"], 
@@ -506,6 +511,7 @@ Cell[BoxData[
          ButtonBox["OpCode",
           BaseStyle->"InformationLink",
           ButtonData:>{"Info83765117251-5730634", {"OpCode", "CPUEmulator`"}},
+          
           ButtonNote->"CPUEmulator`"], 
          ButtonBox["RAMPlot",
           BaseStyle->"InformationLink",
@@ -566,7 +572,6 @@ Cell[BoxData[
           ButtonNote->"CPUEmulator`"], 
          ButtonBox["ResetCPU",
           BaseStyle->"InformationLink",
-          
           ButtonData:>{
            "Info83765117251-5730634", {"ResetCPU", "CPUEmulator`"}},
           ButtonNote->"CPUEmulator`"], 
@@ -618,6 +623,7 @@ Cell[BoxData[
          ButtonBox["PrintA",
           BaseStyle->"InformationLink",
           ButtonData:>{"Info83765117251-5730634", {"PrintA", "CPUEmulator`"}},
+          
           ButtonNote->"CPUEmulator`"], 
          ButtonBox["ReturnC",
           BaseStyle->"InformationLink",
@@ -50930,9 +50936,9 @@ Cell[BoxData[
 }, Open  ]]
 }, Open  ]]
 },
-WindowSize->{1920, 1021},
-WindowMargins->{{0, Automatic}, {0, Automatic}},
-FrontEndVersion->"11.3 for Linux x86 (64-bit) (March 6, 2018)",
+WindowSize->{1600, 863},
+WindowMargins->{{Automatic, -1600}, {Automatic, 37}},
+FrontEndVersion->"12.0 for Linux x86 (64-bit) (April 8, 2019)",
 StyleDefinitions->"Default.nb"
 ]
 (* End of Notebook Content *)
@@ -50947,36 +50953,36 @@ CellTagsIndex->{}
 (*NotebookFileOutline
 Notebook[{
 Cell[CellGroupData[{
-Cell[580, 22, 186, 3, 99, "Title",ExpressionUUID->"7a3c8e4f-dcbc-4fed-a207-f8f4c29f029b"],
+Cell[580, 22, 225, 4, 99, "Title",ExpressionUUID->"7a3c8e4f-dcbc-4fed-a207-f8f4c29f029b"],
 Cell[CellGroupData[{
-Cell[791, 29, 159, 3, 70, "Chapter",ExpressionUUID->"f2c79144-714d-410c-96b6-e81538539d6f"],
+Cell[830, 30, 159, 3, 70, "Chapter",ExpressionUUID->"f2c79144-714d-410c-96b6-e81538539d6f"],
 Cell[CellGroupData[{
-Cell[975, 36, 540, 13, 73, "Input",ExpressionUUID->"f6a7b14d-c66f-4d6e-814e-2b4f870ca9bc",
+Cell[1014, 37, 540, 13, 73, "Input",ExpressionUUID->"f6a7b14d-c66f-4d6e-814e-2b4f870ca9bc",
  InitializationCell->True],
-Cell[1518, 51, 14822, 396, 258, "Print",ExpressionUUID->"915091f0-9763-497f-b9f0-2393cbc46029"]
+Cell[1557, 52, 14866, 400, 284, "Print",ExpressionUUID->"915091f0-9763-497f-b9f0-2393cbc46029"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[16377, 452, 554, 15, 73, "Input",ExpressionUUID->"18fb2135-230e-405b-b262-05069e4ed7f8",
+Cell[16460, 457, 554, 15, 73, "Input",ExpressionUUID->"18fb2135-230e-405b-b262-05069e4ed7f8",
  InitializationCell->True],
-Cell[16934, 469, 7193, 184, 108, "Print",ExpressionUUID->"4b47670e-f916-4401-90d1-75f166d1f844"]
+Cell[17017, 474, 7204, 185, 158, "Print",ExpressionUUID->"4b47670e-f916-4401-90d1-75f166d1f844"]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[24176, 659, 156, 3, 70, "Chapter",ExpressionUUID->"181aab0c-a9b0-4379-b501-b95da5af9342"],
+Cell[24270, 665, 156, 3, 70, "Chapter",ExpressionUUID->"181aab0c-a9b0-4379-b501-b95da5af9342"],
 Cell[CellGroupData[{
-Cell[24357, 666, 488, 9, 239, "Input",ExpressionUUID->"d46d48ab-1892-4691-b2ba-6d6c5092bba3"],
-Cell[24848, 677, 5099, 87, 220, "Output",ExpressionUUID->"ed50b342-3e90-48f8-8df3-547b227f5a83"]
+Cell[24451, 672, 488, 9, 239, "Input",ExpressionUUID->"d46d48ab-1892-4691-b2ba-6d6c5092bba3"],
+Cell[24942, 683, 5099, 87, 220, "Output",ExpressionUUID->"ed50b342-3e90-48f8-8df3-547b227f5a83"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[29984, 769, 279, 5, 31, "Input",ExpressionUUID->"3935c0c4-bc51-438d-afa0-4dc79797634f"],
-Cell[30266, 776, 472, 6, 450, "Output",ExpressionUUID->"59daf0e5-02bb-4b06-9032-586b42aace00"]
+Cell[30078, 775, 279, 5, 31, "Input",ExpressionUUID->"3935c0c4-bc51-438d-afa0-4dc79797634f"],
+Cell[30360, 782, 472, 6, 450, "Output",ExpressionUUID->"59daf0e5-02bb-4b06-9032-586b42aace00"]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[30787, 788, 156, 3, 70, "Chapter",ExpressionUUID->"faf8d9c2-a9b8-4565-bfbd-ad99291fc994"],
+Cell[30881, 794, 156, 3, 70, "Chapter",ExpressionUUID->"faf8d9c2-a9b8-4565-bfbd-ad99291fc994"],
 Cell[CellGroupData[{
-Cell[30968, 795, 337, 6, 31, "Input",ExpressionUUID->"3c141cc4-3216-473b-9197-03d0428b9919"],
-Cell[31308, 803, 2538356, 50124, 856, "Output",ExpressionUUID->"376ab15d-9489-4253-97cc-fb82cc120d18"]
+Cell[31062, 801, 337, 6, 31, "Input",ExpressionUUID->"3c141cc4-3216-473b-9197-03d0428b9919"],
+Cell[31402, 809, 2538356, 50124, 856, "Output",ExpressionUUID->"376ab15d-9489-4253-97cc-fb82cc120d18"]
 }, Open  ]]
 }, Open  ]]
 }, Open  ]]
