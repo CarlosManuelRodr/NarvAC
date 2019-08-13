@@ -1,0 +1,1583 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.3' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     66736,       1575]
+NotebookOptionsPosition[     64976,       1532]
+NotebookOutlinePosition[     65313,       1547]
+CellTagsIndexPosition[     65270,       1544]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Compilation and execution example", "Title",
+ CellChangeTimes->{{3.764337162749892*^9, 3.764337176757475*^9}, {
+  3.774379094577404*^9, 
+  3.774379095320581*^9}},ExpressionUUID->"7a3c8e4f-dcbc-4fed-a207-\
+f8f4c29f029b"],
+
+Cell[CellGroupData[{
+
+Cell["Initialization", "Chapter",
+ CellChangeTimes->{{3.764337182674385*^9, 
+  3.764337184325615*^9}},ExpressionUUID->"f2c79144-714d-410c-96b6-\
+e81538539d6f"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Needs", "[", 
+   RowBox[{"\"\<PL0Compiler`\>\"", ",", 
+    RowBox[{"FileNameJoin", "[", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"ParentDirectory", "[", 
+        RowBox[{"NotebookDirectory", "[", "]"}], "]"}], ",", 
+       "\"\<Packages\>\"", ",", "\"\<Compiler.wl\>\""}], "}"}], "]"}]}], 
+   "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"?", "PL0Compiler`*"}]}], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.76428808735279*^9, 3.764288108376547*^9}, {
+  3.7746449089931297`*^9, 3.774644930239203*^9}},
+ CellLabel->"In[3]:=",ExpressionUUID->"f6a7b14d-c66f-4d6e-814e-2b4f870ca9bc"],
+
+Cell[BoxData[
+ StyleBox[
+  FrameBox[GridBox[{
+     {
+      DynamicModuleBox[{Typeset`open$$ = True}, 
+       PaneSelectorBox[{False->
+        ButtonBox[
+         RowBox[{
+          
+          DynamicBox[FEPrivate`FrontEndResource[
+           "FEBitmaps", "RightPointerOpener"]], " ", 
+          StyleBox["PL0Compiler`", "InformationGridGroupHeader"]}],
+         Appearance->None,
+         BaseStyle->"InformationGridLink",
+         ButtonFunction:>FEPrivate`Set[Typeset`open$$, True],
+         Evaluator->Automatic,
+         Method->"Preemptive"], True->
+        PaneBox[GridBox[{
+           {
+            ButtonBox[
+             RowBox[{
+              
+              DynamicBox[FEPrivate`FrontEndResource[
+               "FEBitmaps", "DownPointerOpener"],
+               ImageSizeCache->{10., {2., 8.}}], " ", 
+              StyleBox["PL0Compiler`", "InformationGridGroupHeader"]}],
+             Appearance->None,
+             BaseStyle->"InformationGridLink",
+             ButtonFunction:>FEPrivate`Set[Typeset`open$$, False],
+             Evaluator->Automatic,
+             Method->"Preemptive"]},
+           {
+            PaneBox[GridBox[{
+               {
+                ButtonBox[
+                 StyleBox["AssemblyCompile", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-64a5eef9-62b0-45da-94f2-32278a5bfb05", {
+                   "AssemblyCompile", "PL0Compiler`"}, False},
+                 ButtonNote->"PL0Compiler`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["GetToken", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-64a5eef9-62b0-45da-94f2-32278a5bfb05", {
+                   "GetToken", "PL0Compiler`"}, False},
+                 ButtonNote->"PL0Compiler`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["NFAStar", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-64a5eef9-62b0-45da-94f2-32278a5bfb05", {
+                   "NFAStar", "PL0Compiler`"}, False},
+                 ButtonNote->"PL0Compiler`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["RegexASCIIChars", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-64a5eef9-62b0-45da-94f2-32278a5bfb05", {
+                   "RegexASCIIChars", "PL0Compiler`"}, False},
+                 ButtonNote->"PL0Compiler`",
+                 Evaluator->Automatic]},
+               {
+                ButtonBox[
+                 StyleBox["CompileICToASM", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-64a5eef9-62b0-45da-94f2-32278a5bfb05", {
+                   "CompileICToASM", "PL0Compiler`"}, False},
+                 ButtonNote->"PL0Compiler`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["GrammarGraph", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-64a5eef9-62b0-45da-94f2-32278a5bfb05", {
+                   "GrammarGraph", "PL0Compiler`"}, False},
+                 ButtonNote->"PL0Compiler`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["NFAToDFA", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-64a5eef9-62b0-45da-94f2-32278a5bfb05", {
+                   "NFAToDFA", "PL0Compiler`"}, False},
+                 ButtonNote->"PL0Compiler`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["RegexCompute", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-64a5eef9-62b0-45da-94f2-32278a5bfb05", {
+                   "RegexCompute", "PL0Compiler`"}, False},
+                 ButtonNote->"PL0Compiler`",
+                 Evaluator->Automatic]},
+               {
+                ButtonBox[
+                 StyleBox["CompilePL0ToASM", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-64a5eef9-62b0-45da-94f2-32278a5bfb05", {
+                   "CompilePL0ToASM", "PL0Compiler`"}, False},
+                 ButtonNote->"PL0Compiler`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["GrammarPrettify", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-64a5eef9-62b0-45da-94f2-32278a5bfb05", {
+                   "GrammarPrettify", "PL0Compiler`"}, False},
+                 ButtonNote->"PL0Compiler`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["NFAUnion", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-64a5eef9-62b0-45da-94f2-32278a5bfb05", {
+                   "NFAUnion", "PL0Compiler`"}, False},
+                 ButtonNote->"PL0Compiler`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["RegexConcatenation", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-64a5eef9-62b0-45da-94f2-32278a5bfb05", {
+                   "RegexConcatenation", "PL0Compiler`"}, False},
+                 ButtonNote->"PL0Compiler`",
+                 Evaluator->Automatic]},
+               {
+                ButtonBox[
+                 StyleBox["CreateTokenRecognizer", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-64a5eef9-62b0-45da-94f2-32278a5bfb05", {
+                   "CreateTokenRecognizer", "PL0Compiler`"}, False},
+                 ButtonNote->"PL0Compiler`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["ICProcessLabels", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-64a5eef9-62b0-45da-94f2-32278a5bfb05", {
+                   "ICProcessLabels", "PL0Compiler`"}, False},
+                 ButtonNote->"PL0Compiler`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["NonTerm", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-64a5eef9-62b0-45da-94f2-32278a5bfb05", {
+                   "NonTerm", "PL0Compiler`"}, False},
+                 ButtonNote->"PL0Compiler`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["RegexDagger", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-64a5eef9-62b0-45da-94f2-32278a5bfb05", {
+                   "RegexDagger", "PL0Compiler`"}, False},
+                 ButtonNote->"PL0Compiler`",
+                 Evaluator->Automatic]},
+               {
+                ButtonBox[
+                 StyleBox["CreateTokens", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 ButtonData:>{
+                  "Info-64a5eef9-62b0-45da-94f2-32278a5bfb05", {
+                   "CreateTokens", "PL0Compiler`"}, False},
+                 ButtonNote->"PL0Compiler`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["Lint", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-64a5eef9-62b0-45da-94f2-32278a5bfb05", {
+                   "Lint", "PL0Compiler`"}, False},
+                 ButtonNote->"PL0Compiler`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["Parse", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-64a5eef9-62b0-45da-94f2-32278a5bfb05", {
+                   "Parse", "PL0Compiler`"}, False},
+                 ButtonNote->"PL0Compiler`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["RegexDigits", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-64a5eef9-62b0-45da-94f2-32278a5bfb05", {
+                   "RegexDigits", "PL0Compiler`"}, False},
+                 ButtonNote->"PL0Compiler`",
+                 Evaluator->Automatic]},
+               {
+                ButtonBox[
+                 StyleBox["DFA", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-64a5eef9-62b0-45da-94f2-32278a5bfb05", {
+                   "DFA", "PL0Compiler`"}, False},
+                 ButtonNote->"PL0Compiler`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["MachineInstructions", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 ButtonData:>{
+                  "Info-64a5eef9-62b0-45da-94f2-32278a5bfb05", {
+                   "MachineInstructions", "PL0Compiler`"}, False},
+                 ButtonNote->"PL0Compiler`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["ParseTree", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-64a5eef9-62b0-45da-94f2-32278a5bfb05", {
+                   "ParseTree", "PL0Compiler`"}, False},
+                 ButtonNote->"PL0Compiler`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["RegexStar", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-64a5eef9-62b0-45da-94f2-32278a5bfb05", {
+                   "RegexStar", "PL0Compiler`"}, False},
+                 ButtonNote->"PL0Compiler`",
+                 Evaluator->Automatic]},
+               {
+                ButtonBox[
+                 StyleBox["DFACompute", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-64a5eef9-62b0-45da-94f2-32278a5bfb05", {
+                   "DFACompute", "PL0Compiler`"}, False},
+                 ButtonNote->"PL0Compiler`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["MatchTerminals", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-64a5eef9-62b0-45da-94f2-32278a5bfb05", {
+                   "MatchTerminals", "PL0Compiler`"}, False},
+                 ButtonNote->"PL0Compiler`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["PL0Compile", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-64a5eef9-62b0-45da-94f2-32278a5bfb05", {
+                   "PL0Compile", "PL0Compiler`"}, False},
+                 ButtonNote->"PL0Compiler`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["RegexUnion", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-64a5eef9-62b0-45da-94f2-32278a5bfb05", {
+                   "RegexUnion", "PL0Compiler`"}, False},
+                 ButtonNote->"PL0Compiler`",
+                 Evaluator->Automatic]},
+               {
+                ButtonBox[
+                 StyleBox["DFAExecutionPlot", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-64a5eef9-62b0-45da-94f2-32278a5bfb05", {
+                   "DFAExecutionPlot", "PL0Compiler`"}, False},
+                 ButtonNote->"PL0Compiler`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["MatchTerminalsWithRule", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-64a5eef9-62b0-45da-94f2-32278a5bfb05", {
+                   "MatchTerminalsWithRule", "PL0Compiler`"}, False},
+                 ButtonNote->"PL0Compiler`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["PL0CompileToIC", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-64a5eef9-62b0-45da-94f2-32278a5bfb05", {
+                   "PL0CompileToIC", "PL0Compiler`"}, False},
+                 ButtonNote->"PL0Compiler`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["SynthesizeNonTerm", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-64a5eef9-62b0-45da-94f2-32278a5bfb05", {
+                   "SynthesizeNonTerm", "PL0Compiler`"}, False},
+                 ButtonNote->"PL0Compiler`",
+                 Evaluator->Automatic]},
+               {
+                ButtonBox[
+                 StyleBox["DFAIterate", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-64a5eef9-62b0-45da-94f2-32278a5bfb05", {
+                   "DFAIterate", "PL0Compiler`"}, False},
+                 ButtonNote->"PL0Compiler`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["NFA", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-64a5eef9-62b0-45da-94f2-32278a5bfb05", {
+                   "NFA", "PL0Compiler`"}, False},
+                 ButtonNote->"PL0Compiler`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["PL0ParseAndSynthesize", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-64a5eef9-62b0-45da-94f2-32278a5bfb05", {
+                   "PL0ParseAndSynthesize", "PL0Compiler`"}, False},
+                 ButtonNote->"PL0Compiler`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["SynthesizeTerm", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-64a5eef9-62b0-45da-94f2-32278a5bfb05", {
+                   "SynthesizeTerm", "PL0Compiler`"}, False},
+                 ButtonNote->"PL0Compiler`",
+                 Evaluator->Automatic]},
+               {
+                ButtonBox[
+                 StyleBox["DFATransitions", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-64a5eef9-62b0-45da-94f2-32278a5bfb05", {
+                   "DFATransitions", "PL0Compiler`"}, False},
+                 ButtonNote->"PL0Compiler`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["NFACompute", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-64a5eef9-62b0-45da-94f2-32278a5bfb05", {
+                   "NFACompute", "PL0Compiler`"}, False},
+                 ButtonNote->"PL0Compiler`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["PlotIC", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-64a5eef9-62b0-45da-94f2-32278a5bfb05", {
+                   "PlotIC", "PL0Compiler`"}, False},
+                 ButtonNote->"PL0Compiler`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["SynthesizeTree", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-64a5eef9-62b0-45da-94f2-32278a5bfb05", {
+                   "SynthesizeTree", "PL0Compiler`"}, False},
+                 ButtonNote->"PL0Compiler`",
+                 Evaluator->Automatic]},
+               {
+                ButtonBox[
+                 StyleBox["EmptyString", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-64a5eef9-62b0-45da-94f2-32278a5bfb05", {
+                   "EmptyString", "PL0Compiler`"}, False},
+                 ButtonNote->"PL0Compiler`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["NFAConcatention", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-64a5eef9-62b0-45da-94f2-32278a5bfb05", {
+                   "NFAConcatention", "PL0Compiler`"}, False},
+                 ButtonNote->"PL0Compiler`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["ProcedureProcessLabels", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-64a5eef9-62b0-45da-94f2-32278a5bfb05", {
+                   "ProcedureProcessLabels", "PL0Compiler`"}, False},
+                 ButtonNote->"PL0Compiler`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["Term", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-64a5eef9-62b0-45da-94f2-32278a5bfb05", {
+                   "Term", "PL0Compiler`"}, False},
+                 ButtonNote->"PL0Compiler`",
+                 Evaluator->Automatic]},
+               {
+                ButtonBox[
+                 StyleBox["FiniteAutomataPlot", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-64a5eef9-62b0-45da-94f2-32278a5bfb05", {
+                   "FiniteAutomataPlot", "PL0Compiler`"}, False},
+                 ButtonNote->"PL0Compiler`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["NFAExecutionPlot", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-64a5eef9-62b0-45da-94f2-32278a5bfb05", {
+                   "NFAExecutionPlot", "PL0Compiler`"}, False},
+                 ButtonNote->"PL0Compiler`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["ProcessTags", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-64a5eef9-62b0-45da-94f2-32278a5bfb05", {
+                   "ProcessTags", "PL0Compiler`"}, False},
+                 ButtonNote->"PL0Compiler`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["Token", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-64a5eef9-62b0-45da-94f2-32278a5bfb05", {
+                   "Token", "PL0Compiler`"}, False},
+                 ButtonNote->"PL0Compiler`",
+                 Evaluator->Automatic]},
+               {
+                ButtonBox[
+                 StyleBox["GetAction", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-64a5eef9-62b0-45da-94f2-32278a5bfb05", {
+                   "GetAction", "PL0Compiler`"}, False},
+                 ButtonNote->"PL0Compiler`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["NFAExecutionTree", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-64a5eef9-62b0-45da-94f2-32278a5bfb05", {
+                   "NFAExecutionTree", "PL0Compiler`"}, False},
+                 ButtonNote->"PL0Compiler`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["Regex", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-64a5eef9-62b0-45da-94f2-32278a5bfb05", {
+                   "Regex", "PL0Compiler`"}, False},
+                 ButtonNote->"PL0Compiler`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["Tokenize", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-64a5eef9-62b0-45da-94f2-32278a5bfb05", {
+                   "Tokenize", "PL0Compiler`"}, False},
+                 ButtonNote->"PL0Compiler`",
+                 Evaluator->Automatic]},
+               {
+                ButtonBox[
+                 StyleBox["GetInstructions", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-64a5eef9-62b0-45da-94f2-32278a5bfb05", {
+                   "GetInstructions", "PL0Compiler`"}, False},
+                 ButtonNote->"PL0Compiler`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 
+                 StyleBox["NFAExecutionTreeComputeTrace", 
+                  "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-64a5eef9-62b0-45da-94f2-32278a5bfb05", {
+                   "NFAExecutionTreeComputeTrace", "PL0Compiler`"}, False},
+                 ButtonNote->"PL0Compiler`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["RegexAlphabet", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-64a5eef9-62b0-45da-94f2-32278a5bfb05", {
+                   "RegexAlphabet", "PL0Compiler`"}, False},
+                 ButtonNote->"PL0Compiler`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["VerifyGrammar", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-64a5eef9-62b0-45da-94f2-32278a5bfb05", {
+                   "VerifyGrammar", "PL0Compiler`"}, False},
+                 ButtonNote->"PL0Compiler`",
+                 Evaluator->Automatic]},
+               {
+                ButtonBox[
+                 StyleBox["GetNextToken", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-64a5eef9-62b0-45da-94f2-32278a5bfb05", {
+                   "GetNextToken", "PL0Compiler`"}, False},
+                 ButtonNote->"PL0Compiler`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["NFAIterate", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-64a5eef9-62b0-45da-94f2-32278a5bfb05", {
+                   "NFAIterate", "PL0Compiler`"}, False},
+                 ButtonNote->"PL0Compiler`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["RegexAlphabetLowercase", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-64a5eef9-62b0-45da-94f2-32278a5bfb05", {
+                   "RegexAlphabetLowercase", "PL0Compiler`"}, False},
+                 ButtonNote->"PL0Compiler`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["VerifyInput", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-64a5eef9-62b0-45da-94f2-32278a5bfb05", {
+                   "VerifyInput", "PL0Compiler`"}, False},
+                 ButtonNote->"PL0Compiler`",
+                 Evaluator->Automatic]},
+               {
+                ButtonBox[
+                 StyleBox["GetPosition", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-64a5eef9-62b0-45da-94f2-32278a5bfb05", {
+                   "GetPosition", "PL0Compiler`"}, False},
+                 ButtonNote->"PL0Compiler`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["NFASimplify", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-64a5eef9-62b0-45da-94f2-32278a5bfb05", {
+                   "NFASimplify", "PL0Compiler`"}, False},
+                 ButtonNote->"PL0Compiler`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["RegexAlphabetUppercase", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-64a5eef9-62b0-45da-94f2-32278a5bfb05", {
+                   "RegexAlphabetUppercase", "PL0Compiler`"}, False},
+                 ButtonNote->"PL0Compiler`",
+                 Evaluator->Automatic], ""}
+              },
+              DefaultBaseStyle->"Text",
+              
+              GridBoxAlignment->{
+               "Columns" -> {{Left}}, "Rows" -> {{Baseline}}},
+              GridBoxItemSize->{"Columns" -> {{
+                   Scaled[0.2375]}}}],
+             ImageMargins->{{10, 0}, {0, 2}}]}
+          },
+          GridBoxAlignment->{"Columns" -> {{Left}}, "Rows" -> {{Baseline}}}],
+         FrameMargins->{{0, 0}, {8, 0}}]}, Dynamic[Typeset`open$$],
+        ImageSize->Automatic]]}
+    },
+    GridBoxAlignment->{"Columns" -> {{Left}}, "Rows" -> {{Baseline}}},
+    GridBoxDividers->{"ColumnsIndexed" -> {{False}}, "RowsIndexed" -> {}},
+    GridBoxSpacings->{"Columns" -> {
+        Offset[0.27999999999999997`], {
+         Offset[0.5599999999999999]}, 
+        Offset[0.27999999999999997`]}, "Rows" -> {
+        Offset[0.2], {
+         Offset[0.8]}, 
+        Offset[0.2]}}],
+   BaseStyle->"InformationTitleFrame"], "InformationGridPlain"]], "Output",
+ CellChangeTimes->{{3.774644923524392*^9, 3.774644939164124*^9}},
+ CellLabel->"Out[4]=",ExpressionUUID->"a1baca89-6040-4f30-bc54-c99eb0ad0093"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Needs", "[", 
+   RowBox[{"\"\<CPU`\>\"", ",", 
+    RowBox[{"FileNameJoin", "[", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"ParentDirectory", "[", 
+        RowBox[{"NotebookDirectory", "[", "]"}], "]"}], ",", 
+       "\"\<Packages\>\"", ",", "\"\<CPU.wl\>\""}], "}"}], "]"}]}], "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"?", "CPU`*"}]}], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.764288046336372*^9, 3.764288058143332*^9}, {
+  3.7652129982697372`*^9, 3.7652129985740337`*^9}, {3.774644949038754*^9, 
+  3.774645016616024*^9}},
+ CellLabel->"In[13]:=",ExpressionUUID->"18fb2135-230e-405b-b262-05069e4ed7f8"],
+
+Cell[BoxData[
+ StyleBox[
+  FrameBox[GridBox[{
+     {
+      DynamicModuleBox[{Typeset`open$$ = True}, 
+       PaneSelectorBox[{False->
+        ButtonBox[
+         RowBox[{
+          
+          DynamicBox[FEPrivate`FrontEndResource[
+           "FEBitmaps", "RightPointerOpener"]], " ", 
+          StyleBox["CPU`", "InformationGridGroupHeader"]}],
+         Appearance->None,
+         BaseStyle->"InformationGridLink",
+         ButtonFunction:>FEPrivate`Set[Typeset`open$$, True],
+         Evaluator->Automatic,
+         Method->"Preemptive"], True->
+        PaneBox[GridBox[{
+           {
+            ButtonBox[
+             RowBox[{
+              
+              DynamicBox[FEPrivate`FrontEndResource[
+               "FEBitmaps", "DownPointerOpener"],
+               ImageSizeCache->{10., {2., 8.}}], " ", 
+              StyleBox["CPU`", "InformationGridGroupHeader"]}],
+             Appearance->None,
+             BaseStyle->"InformationGridLink",
+             ButtonFunction:>FEPrivate`Set[Typeset`open$$, False],
+             Evaluator->Automatic,
+             Method->"Preemptive"]},
+           {
+            PaneBox[GridBox[{
+               {
+                ButtonBox[
+                 StyleBox["ALUAdder", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-58b07171-46e4-498c-bb44-31d15a4a05fc", {
+                   "ALUAdder", "CPU`"}, False},
+                 ButtonNote->"CPU`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["CompactEvaluatedTreeForm", "InformationGridButton"],
+                 
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-58b07171-46e4-498c-bb44-31d15a4a05fc", {
+                   "CompactEvaluatedTreeForm", "CPU`"}, False},
+                 ButtonNote->"CPU`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["HalfAdder", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-58b07171-46e4-498c-bb44-31d15a4a05fc", {
+                   "HalfAdder", "CPU`"}, False},
+                 ButtonNote->"CPU`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["ReadBit3Register", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-58b07171-46e4-498c-bb44-31d15a4a05fc", {
+                   "ReadBit3Register", "CPU`"}, False},
+                 ButtonNote->"CPU`",
+                 Evaluator->Automatic]},
+               {
+                ButtonBox[
+                 StyleBox["ALUClear", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-58b07171-46e4-498c-bb44-31d15a4a05fc", {
+                   "ALUClear", "CPU`"}, False},
+                 ButtonNote->"CPU`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["CompactTreeForm", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-58b07171-46e4-498c-bb44-31d15a4a05fc", {
+                   "CompactTreeForm", "CPU`"}, False},
+                 ButtonNote->"CPU`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["LoadProgram", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-58b07171-46e4-498c-bb44-31d15a4a05fc", {
+                   "LoadProgram", "CPU`"}, False},
+                 ButtonNote->"CPU`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["ReadBit8AddressBlock", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-58b07171-46e4-498c-bb44-31d15a4a05fc", {
+                   "ReadBit8AddressBlock", "CPU`"}, False},
+                 ButtonNote->"CPU`",
+                 Evaluator->Automatic]},
+               {
+                ButtonBox[
+                 StyleBox["ALUExecute", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-58b07171-46e4-498c-bb44-31d15a4a05fc", {
+                   "ALUExecute", "CPU`"}, False},
+                 ButtonNote->"CPU`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["CPUAndProgramPlot", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-58b07171-46e4-498c-bb44-31d15a4a05fc", {
+                   "CPUAndProgramPlot", "CPU`"}, False},
+                 ButtonNote->"CPU`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["MemoryEvaluate", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-58b07171-46e4-498c-bb44-31d15a4a05fc", {
+                   "MemoryEvaluate", "CPU`"}, False},
+                 ButtonNote->"CPU`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["ReadBit8Register", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-58b07171-46e4-498c-bb44-31d15a4a05fc", {
+                   "ReadBit8Register", "CPU`"}, False},
+                 ButtonNote->"CPU`",
+                 Evaluator->Automatic]},
+               {
+                ButtonBox[
+                 StyleBox["ALUNotZero", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-58b07171-46e4-498c-bb44-31d15a4a05fc", {
+                   "ALUNotZero", "CPU`"}, False},
+                 ButtonNote->"CPU`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["CPUPlot", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-58b07171-46e4-498c-bb44-31d15a4a05fc", {
+                   "CPUPlot", "CPU`"}, False},
+                 ButtonNote->"CPU`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["Multiplexer3Bit", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-58b07171-46e4-498c-bb44-31d15a4a05fc", {
+                   "Multiplexer3Bit", "CPU`"}, False},
+                 ButtonNote->"CPU`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["ReadFlag", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-58b07171-46e4-498c-bb44-31d15a4a05fc", {
+                   "ReadFlag", "CPU`"}, False},
+                 ButtonNote->"CPU`",
+                 Evaluator->Automatic]},
+               {
+                ButtonBox[
+                 StyleBox["ALUOpCode", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-58b07171-46e4-498c-bb44-31d15a4a05fc", {
+                   "ALUOpCode", "CPU`"}, False},
+                 ButtonNote->"CPU`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["CUClear", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-58b07171-46e4-498c-bb44-31d15a4a05fc", {
+                   "CUClear", "CPU`"}, False},
+                 ButtonNote->"CPU`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["Multiplexer8Bit", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-58b07171-46e4-498c-bb44-31d15a4a05fc", {
+                   "Multiplexer8Bit", "CPU`"}, False},
+                 ButtonNote->"CPU`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["ResetBit8AddressBlock", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-58b07171-46e4-498c-bb44-31d15a4a05fc", {
+                   "ResetBit8AddressBlock", "CPU`"}, False},
+                 ButtonNote->"CPU`",
+                 Evaluator->Automatic]},
+               {
+                ButtonBox[
+                 StyleBox["ALUParity", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-58b07171-46e4-498c-bb44-31d15a4a05fc", {
+                   "ALUParity", "CPU`"}, False},
+                 ButtonNote->"CPU`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["CUDecode", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-58b07171-46e4-498c-bb44-31d15a4a05fc", {
+                   "CUDecode", "CPU`"}, False},
+                 ButtonNote->"CPU`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["MultiplexerNTo1", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-58b07171-46e4-498c-bb44-31d15a4a05fc", {
+                   "MultiplexerNTo1", "CPU`"}, False},
+                 ButtonNote->"CPU`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["VisualizeAdder", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-58b07171-46e4-498c-bb44-31d15a4a05fc", {
+                   "VisualizeAdder", "CPU`"}, False},
+                 ButtonNote->"CPU`",
+                 Evaluator->Automatic]},
+               {
+                ButtonBox[
+                 StyleBox["ALUSubstractor", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-58b07171-46e4-498c-bb44-31d15a4a05fc", {
+                   "ALUSubstractor", "CPU`"}, False},
+                 ButtonNote->"CPU`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["CUExecute", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-58b07171-46e4-498c-bb44-31d15a4a05fc", {
+                   "CUExecute", "CPU`"}, False},
+                 ButtonNote->"CPU`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["Mux2to1", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-58b07171-46e4-498c-bb44-31d15a4a05fc", {
+                   "Mux2to1", "CPU`"}, False},
+                 ButtonNote->"CPU`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["VisualizeMultiplexer", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-58b07171-46e4-498c-bb44-31d15a4a05fc", {
+                   "VisualizeMultiplexer", "CPU`"}, False},
+                 ButtonNote->"CPU`",
+                 Evaluator->Automatic]},
+               {
+                ButtonBox[
+                 StyleBox["ALUZero", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-58b07171-46e4-498c-bb44-31d15a4a05fc", {
+                   "ALUZero", "CPU`"}, False},
+                 ButtonNote->"CPU`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["CUFetch", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-58b07171-46e4-498c-bb44-31d15a4a05fc", {
+                   "CUFetch", "CPU`"}, False},
+                 ButtonNote->"CPU`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["Mux4to1", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-58b07171-46e4-498c-bb44-31d15a4a05fc", {
+                   "Mux4to1", "CPU`"}, False},
+                 ButtonNote->"CPU`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["WriteBit3Register", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-58b07171-46e4-498c-bb44-31d15a4a05fc", {
+                   "WriteBit3Register", "CPU`"}, False},
+                 ButtonNote->"CPU`",
+                 Evaluator->Automatic]},
+               {
+                ButtonBox[
+                 StyleBox["AndOrLatch", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-58b07171-46e4-498c-bb44-31d15a4a05fc", {
+                   "AndOrLatch", "CPU`"}, False},
+                 ButtonNote->"CPU`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["ExecuteCode", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-58b07171-46e4-498c-bb44-31d15a4a05fc", {
+                   "ExecuteCode", "CPU`"}, False},
+                 ButtonNote->"CPU`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["Mux8to1", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-58b07171-46e4-498c-bb44-31d15a4a05fc", {
+                   "Mux8to1", "CPU`"}, False},
+                 ButtonNote->"CPU`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["WriteBit8AddressBlock", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-58b07171-46e4-498c-bb44-31d15a4a05fc", {
+                   "WriteBit8AddressBlock", "CPU`"}, False},
+                 ButtonNote->"CPU`",
+                 Evaluator->Automatic]},
+               {
+                ButtonBox[
+                 StyleBox["Bit3Register", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-58b07171-46e4-498c-bb44-31d15a4a05fc", {
+                   "Bit3Register", "CPU`"}, False},
+                 ButtonNote->"CPU`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["ExecuteCodeInteractive", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-58b07171-46e4-498c-bb44-31d15a4a05fc", {
+                   "ExecuteCodeInteractive", "CPU`"}, False},
+                 ButtonNote->"CPU`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["MuxInputByOpcode", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-58b07171-46e4-498c-bb44-31d15a4a05fc", {
+                   "MuxInputByOpcode", "CPU`"}, False},
+                 ButtonNote->"CPU`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["WriteBit8Register", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-58b07171-46e4-498c-bb44-31d15a4a05fc", {
+                   "WriteBit8Register", "CPU`"}, False},
+                 ButtonNote->"CPU`",
+                 Evaluator->Automatic]},
+               {
+                ButtonBox[
+                 StyleBox["Bit8AddressBlock", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-58b07171-46e4-498c-bb44-31d15a4a05fc", {
+                   "Bit8AddressBlock", "CPU`"}, False},
+                 ButtonNote->"CPU`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["ExecuteProgram", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-58b07171-46e4-498c-bb44-31d15a4a05fc", {
+                   "ExecuteProgram", "CPU`"}, False},
+                 ButtonNote->"CPU`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["OpCode", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-58b07171-46e4-498c-bb44-31d15a4a05fc", {
+                   "OpCode", "CPU`"}, False},
+                 ButtonNote->"CPU`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["WriteFlag", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-58b07171-46e4-498c-bb44-31d15a4a05fc", {
+                   "WriteFlag", "CPU`"}, False},
+                 ButtonNote->"CPU`",
+                 Evaluator->Automatic]},
+               {
+                ButtonBox[
+                 StyleBox["Bit8AddressCell", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-58b07171-46e4-498c-bb44-31d15a4a05fc", {
+                   "Bit8AddressCell", "CPU`"}, False},
+                 ButtonNote->"CPU`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["Flag", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-58b07171-46e4-498c-bb44-31d15a4a05fc", {
+                   "Flag", "CPU`"}, False},
+                 ButtonNote->"CPU`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 
+                 StyleBox["PlotCompactInteractiveSystem", 
+                  "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-58b07171-46e4-498c-bb44-31d15a4a05fc", {
+                   "PlotCompactInteractiveSystem", "CPU`"}, False},
+                 ButtonNote->"CPU`",
+                 Evaluator->Automatic], ""},
+               {
+                ButtonBox[
+                 StyleBox["Bit8Register", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-58b07171-46e4-498c-bb44-31d15a4a05fc", {
+                   "Bit8Register", "CPU`"}, False},
+                 ButtonNote->"CPU`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["FullAdder", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-58b07171-46e4-498c-bb44-31d15a4a05fc", {
+                   "FullAdder", "CPU`"}, False},
+                 ButtonNote->"CPU`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["PlotExpression", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-58b07171-46e4-498c-bb44-31d15a4a05fc", {
+                   "PlotExpression", "CPU`"}, False},
+                 ButtonNote->"CPU`",
+                 Evaluator->Automatic], ""},
+               {
+                ButtonBox[
+                 StyleBox["ClearProgram", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-58b07171-46e4-498c-bb44-31d15a4a05fc", {
+                   "ClearProgram", "CPU`"}, False},
+                 ButtonNote->"CPU`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["GatedLatch", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-58b07171-46e4-498c-bb44-31d15a4a05fc", {
+                   "GatedLatch", "CPU`"}, False},
+                 ButtonNote->"CPU`",
+                 Evaluator->Automatic], 
+                ButtonBox[
+                 StyleBox["PlotInteractiveSystem", "InformationGridButton"],
+                 Appearance->None,
+                 BaseStyle->"InformationGridLink",
+                 
+                 ButtonData:>{
+                  "Info-58b07171-46e4-498c-bb44-31d15a4a05fc", {
+                   "PlotInteractiveSystem", "CPU`"}, False},
+                 ButtonNote->"CPU`",
+                 Evaluator->Automatic], ""}
+              },
+              DefaultBaseStyle->"Text",
+              
+              GridBoxAlignment->{
+               "Columns" -> {{Left}}, "Rows" -> {{Baseline}}},
+              GridBoxItemSize->{"Columns" -> {{
+                   Scaled[0.2375]}}}],
+             ImageMargins->{{10, 0}, {0, 2}}]}
+          },
+          GridBoxAlignment->{"Columns" -> {{Left}}, "Rows" -> {{Baseline}}}],
+         FrameMargins->{{0, 0}, {8, 0}}]}, Dynamic[Typeset`open$$],
+        ImageSize->Automatic]]}
+    },
+    GridBoxAlignment->{"Columns" -> {{Left}}, "Rows" -> {{Baseline}}},
+    GridBoxDividers->{"ColumnsIndexed" -> {{False}}, "RowsIndexed" -> {}},
+    GridBoxSpacings->{"Columns" -> {
+        Offset[0.27999999999999997`], {
+         Offset[0.5599999999999999]}, 
+        Offset[0.27999999999999997`]}, "Rows" -> {
+        Offset[0.2], {
+         Offset[0.8]}, 
+        Offset[0.2]}}],
+   BaseStyle->"InformationTitleFrame"], "InformationGridPlain"]], "Output",
+ CellChangeTimes->{3.774645017124984*^9},
+ CellLabel->"Out[14]=",ExpressionUUID->"28eb7154-110e-47d8-a1b2-a9744f91d49e"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Compilation", "Chapter",
+ CellChangeTimes->{{3.764337193968546*^9, 
+  3.764337195440364*^9}},ExpressionUUID->"181aab0c-a9b0-4379-b501-\
+b95da5af9342"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+  "program", " ", "=", " ", 
+   "\"\<var n;\nbegin\n   n := 0;\n   while n # 10 do\n   begin\n      print \
+n;\n      n := n + 1;\n   end;\nend.\>\""}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"Lint", "[", "program", "]"}]}], "Input",
+ CellChangeTimes->{{3.764075310599967*^9, 3.7640753366570044`*^9}, 
+   3.7640929720494843`*^9, 3.764288161875684*^9, 3.765135016426738*^9},
+ CellLabel->"In[16]:=",ExpressionUUID->"d46d48ab-1892-4691-b2ba-6d6c5092bba3"],
+
+Cell[BoxData[
+ TemplateBox[{StyleBox["\"var\"", 
+    RGBColor[0.33, 0.6, 0.], StripOnInput -> False],StyleBox["\" \"", 
+    GrayLevel[0], StripOnInput -> False],StyleBox["\"n\"", 
+    GrayLevel[0], StripOnInput -> False],StyleBox["\";\"", 
+    GrayLevel[0], StripOnInput -> False],StyleBox["\"\\n\"", 
+    GrayLevel[0], StripOnInput -> False],StyleBox["\"begin\"", 
+    RGBColor[0.55, 0., 0.8200000000000001], StripOnInput -> False],StyleBox[
+   "\"\\n\"", 
+    GrayLevel[0], StripOnInput -> False],StyleBox["\" \"", 
+    GrayLevel[0], StripOnInput -> False],StyleBox["\" \"", 
+    GrayLevel[0], StripOnInput -> False],StyleBox["\" \"", 
+    GrayLevel[0], StripOnInput -> False],StyleBox["\"n\"", 
+    GrayLevel[0], StripOnInput -> False],StyleBox["\" \"", 
+    GrayLevel[0], StripOnInput -> False],StyleBox["\":=\"", 
+    RGBColor[0.5, 0.01, 0.], StripOnInput -> False],StyleBox["\" \"", 
+    GrayLevel[0], StripOnInput -> False],StyleBox["\"0\"", 
+    RGBColor[0.76, 0.37, 0.], StripOnInput -> False],StyleBox["\";\"", 
+    GrayLevel[0], StripOnInput -> False],StyleBox["\"\\n\"", 
+    GrayLevel[0], StripOnInput -> False],StyleBox["\" \"", 
+    GrayLevel[0], StripOnInput -> False],StyleBox["\" \"", 
+    GrayLevel[0], StripOnInput -> False],StyleBox["\" \"", 
+    GrayLevel[0], StripOnInput -> False],StyleBox["\"while\"", 
+    RGBColor[0.55, 0., 0.8200000000000001], StripOnInput -> False],StyleBox[
+   "\" \"", 
+    GrayLevel[0], StripOnInput -> False],StyleBox["\"n\"", 
+    GrayLevel[0], StripOnInput -> False],StyleBox["\" \"", 
+    GrayLevel[0], StripOnInput -> False],StyleBox["\"#\"", 
+    RGBColor[0.5, 0.01, 0.], StripOnInput -> False],StyleBox["\" \"", 
+    GrayLevel[0], StripOnInput -> False],StyleBox["\"10\"", 
+    RGBColor[0.76, 0.37, 0.], StripOnInput -> False],StyleBox["\" \"", 
+    GrayLevel[0], StripOnInput -> False],StyleBox["\"do\"", 
+    RGBColor[0.55, 0., 0.8200000000000001], StripOnInput -> False],StyleBox[
+   "\"\\n\"", 
+    GrayLevel[0], StripOnInput -> False],StyleBox["\" \"", 
+    GrayLevel[0], StripOnInput -> False],StyleBox["\" \"", 
+    GrayLevel[0], StripOnInput -> False],StyleBox["\" \"", 
+    GrayLevel[0], StripOnInput -> False],StyleBox["\"begin\"", 
+    RGBColor[0.55, 0., 0.8200000000000001], StripOnInput -> False],StyleBox[
+   "\"\\n\"", 
+    GrayLevel[0], StripOnInput -> False],StyleBox["\" \"", 
+    GrayLevel[0], StripOnInput -> False],StyleBox["\" \"", 
+    GrayLevel[0], StripOnInput -> False],StyleBox["\" \"", 
+    GrayLevel[0], StripOnInput -> False],StyleBox["\" \"", 
+    GrayLevel[0], StripOnInput -> False],StyleBox["\" \"", 
+    GrayLevel[0], StripOnInput -> False],StyleBox["\" \"", 
+    GrayLevel[0], StripOnInput -> False],StyleBox["\"print\"", 
+    RGBColor[0.55, 0., 0.8200000000000001], StripOnInput -> False],StyleBox[
+   "\" \"", 
+    GrayLevel[0], StripOnInput -> False],StyleBox["\"n\"", 
+    GrayLevel[0], StripOnInput -> False],StyleBox["\";\"", 
+    GrayLevel[0], StripOnInput -> False],StyleBox["\"\\n\"", 
+    GrayLevel[0], StripOnInput -> False],StyleBox["\" \"", 
+    GrayLevel[0], StripOnInput -> False],StyleBox["\" \"", 
+    GrayLevel[0], StripOnInput -> False],StyleBox["\" \"", 
+    GrayLevel[0], StripOnInput -> False],StyleBox["\" \"", 
+    GrayLevel[0], StripOnInput -> False],StyleBox["\" \"", 
+    GrayLevel[0], StripOnInput -> False],StyleBox["\" \"", 
+    GrayLevel[0], StripOnInput -> False],StyleBox["\"n\"", 
+    GrayLevel[0], StripOnInput -> False],StyleBox["\" \"", 
+    GrayLevel[0], StripOnInput -> False],StyleBox["\":=\"", 
+    RGBColor[0.5, 0.01, 0.], StripOnInput -> False],StyleBox["\" \"", 
+    GrayLevel[0], StripOnInput -> False],StyleBox["\"n\"", 
+    GrayLevel[0], StripOnInput -> False],StyleBox["\" \"", 
+    GrayLevel[0], StripOnInput -> False],StyleBox["\"+\"", 
+    GrayLevel[0], StripOnInput -> False],StyleBox["\" \"", 
+    GrayLevel[0], StripOnInput -> False],StyleBox["\"1\"", 
+    RGBColor[0.76, 0.37, 0.], StripOnInput -> False],StyleBox["\";\"", 
+    GrayLevel[0], StripOnInput -> False],StyleBox["\"\\n\"", 
+    GrayLevel[0], StripOnInput -> False],StyleBox["\" \"", 
+    GrayLevel[0], StripOnInput -> False],StyleBox["\" \"", 
+    GrayLevel[0], StripOnInput -> False],StyleBox["\" \"", 
+    GrayLevel[0], StripOnInput -> False],StyleBox["\"end\"", 
+    RGBColor[0.55, 0., 0.8200000000000001], StripOnInput -> False],StyleBox[
+   "\";\"", 
+    GrayLevel[0], StripOnInput -> False],StyleBox["\"\\n\"", 
+    GrayLevel[0], StripOnInput -> False],StyleBox["\"end\"", 
+    RGBColor[0.55, 0., 0.8200000000000001], StripOnInput -> False],StyleBox[
+   "\".\"", 
+    GrayLevel[0], StripOnInput -> False]},
+  "RowDefault"]], "Output",
+ CellChangeTimes->{3.7640753429147453`*^9, 3.7640929763880663`*^9, 
+  3.764103790365466*^9, 3.764288166859742*^9, 3.764335644148282*^9, 
+  3.764335881865418*^9, 3.764336525194188*^9, 3.764336644561247*^9, 
+  3.764336726863179*^9, 3.764336829652441*^9, 3.764337087808757*^9, 
+  3.765134960859481*^9, 3.765135020667384*^9, 3.765135133648864*^9, 
+  3.7651352539117756`*^9, 3.7746450711897707`*^9},
+ CellLabel->"Out[17]=",ExpressionUUID->"ed947422-d99b-41a3-8d2b-8f2fe735f1cb"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"asm", " ", "=", " ", 
+  RowBox[{"CompilePL0ToASM", "[", "program", "]"}]}]], "Input",
+ CellChangeTimes->{3.764335876647091*^9, 3.7643371067908154`*^9, 
+  3.765134963895045*^9},
+ CellLabel->"In[18]:=",ExpressionUUID->"3935c0c4-bc51-438d-afa0-4dc79797634f"],
+
+Cell[BoxData["\<\"SetA 0\\nStore <n>\\nLabel <0::L1>\\nLoadA <n>\\nSetB \
+10\\nSubstract\\nJumpZero <0::L2>\\nPrint <n>\\nLoadA <n>\\nSetB \
+1\\nAdd\\nStore <$0>\\nLoadA <$0>\\nStore <n>\\nJump <0::L1>\\nLabel \
+<0::L2>\\nReturn\\nDeclare <$0> 0\\nDeclare <n> 0\"\>"], "Output",
+ CellChangeTimes->{3.765134969006571*^9, 3.7651350256296215`*^9, 
+  3.7651351365533166`*^9, 3.765135256785359*^9, 3.774645074596541*^9},
+ CellLabel->"Out[18]=",ExpressionUUID->"c1899069-6948-41cc-93a2-effde533f58f"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Execution", "Chapter",
+ CellChangeTimes->{{3.7643372010236797`*^9, 
+  3.764337202273456*^9}},ExpressionUUID->"faf8d9c2-a9b8-4565-bfbd-\
+ad99291fc994"],
+
+Cell[BoxData[
+ RowBox[{"ExecuteCodeInteractive", "[", 
+  RowBox[{"asm", ",", "3"}], "]"}]], "Input",
+ CellChangeTimes->{3.774645123788533*^9},
+ CellLabel->"In[19]:=",ExpressionUUID->"2eb49d50-624d-4a97-a23d-75121b443f09"]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{1600, 863},
+WindowMargins->{{Automatic, -1600}, {Automatic, 7}},
+FrontEndVersion->"12.0 for Linux x86 (64-bit) (April 8, 2019)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 225, 4, 99, "Title",ExpressionUUID->"7a3c8e4f-dcbc-4fed-a207-f8f4c29f029b"],
+Cell[CellGroupData[{
+Cell[830, 30, 159, 3, 70, "Chapter",ExpressionUUID->"f2c79144-714d-410c-96b6-e81538539d6f"],
+Cell[CellGroupData[{
+Cell[1014, 37, 640, 15, 73, "Input",ExpressionUUID->"f6a7b14d-c66f-4d6e-814e-2b4f870ca9bc",
+ InitializationCell->True],
+Cell[1657, 54, 30367, 703, 436, "Output",ExpressionUUID->"a1baca89-6040-4f30-bc54-c99eb0ad0093"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[32061, 762, 671, 16, 73, "Input",ExpressionUUID->"18fb2135-230e-405b-b262-05069e4ed7f8",
+ InitializationCell->True],
+Cell[32735, 780, 25126, 604, 390, "Output",ExpressionUUID->"28eb7154-110e-47d8-a1b2-a9744f91d49e"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[57910, 1390, 156, 3, 70, "Chapter",ExpressionUUID->"181aab0c-a9b0-4379-b501-b95da5af9342"],
+Cell[CellGroupData[{
+Cell[58091, 1397, 489, 9, 239, "Input",ExpressionUUID->"d46d48ab-1892-4691-b2ba-6d6c5092bba3"],
+Cell[58583, 1408, 5123, 87, 220, "Output",ExpressionUUID->"ed947422-d99b-41a3-8d2b-8f2fe735f1cb"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[63743, 1500, 279, 5, 31, "Input",ExpressionUUID->"3935c0c4-bc51-438d-afa0-4dc79797634f"],
+Cell[64025, 1507, 494, 6, 450, "Output",ExpressionUUID->"c1899069-6948-41cc-93a2-effde533f58f"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[64568, 1519, 156, 3, 70, "Chapter",ExpressionUUID->"faf8d9c2-a9b8-4565-bfbd-ad99291fc994"],
+Cell[64727, 1524, 221, 4, 31, "Input",ExpressionUUID->"2eb49d50-624d-4a97-a23d-75121b443f09"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
