@@ -16,6 +16,7 @@ BeginPackage["CPU`"]
 
 
 MemoryEvaluate::usage = "";
+VisualizeGate::usage = "";
 VisualizeAdder::usage = "";
 VisualizeMultiplexer::usage = "";
 PlotExpression::usage = "";
@@ -126,6 +127,12 @@ BinaryToDecimal[l_] :=
 
 
 (* ::Input::Initialization:: *)
+VisualizeGate[module_] := Block[{logicTable,labels,gridList},
+logicTable =  Map[Join[#,{Apply[module,#]}]&,Tuples[{0,1},2]];
+labels = Join[Take[Map[ToUpperCase,Alphabet[]],2],{"Result"}];
+gridList = Join[{labels},logicTable];
+Grid[gridList,Frame->All,Background->{None,{LightGreen}}]
+];
 VisualizeAdder[module_,inputSize_,flagName_] :=
     Block[ {logicTable,labels,gridList},
         logicTable =  Map[Join[#,Apply[module,#]]&,Tuples[{0,1},inputSize]];
