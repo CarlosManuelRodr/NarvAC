@@ -262,7 +262,7 @@ PlotInteractiveSystem[system_,plotVertex_:({NodeColor[#2],EdgeForm[Black],Disk[#
     ];
 
 
-(* ::Subsection::Closed:: *)
+(* ::Subsection:: *)
 (*Compact tree graph*)
 
 
@@ -305,7 +305,7 @@ CompactTreeForm[expr_] :=
         newGraph = ReplaceAll[EdgeList[graph],ReplaceRuleForAllLabels[labels]];
         deleteVertex = Complement[labels[[All,1]],VertexList[newGraph]];
         newLabels = DeleteCases[labels,x_/;MemberQ[deleteVertex,First[x]]];
-        Graph[newGraph,VertexLabels->newLabels,DirectedEdges->True]
+        Graph[ReplaceAll[newGraph,x_\[DirectedEdge]y_:>y\[DirectedEdge]x],VertexLabels->newLabels,DirectedEdges->True]
     ];
 
 
@@ -338,7 +338,7 @@ CompactEvaluatedTreeForm[expr_,values_,opts: OptionsPattern[]] :=
         highlightedVertexes = Cases[newEvaluatedLabels,HoldPattern[x_->1]:>x];
         highlightedEdges = Select[EdgeList[newGraph],MemberQ[highlightedVertexes,Last[#]]&];
         graph = Graph[
-        newGraph,
+        ReplaceAll[newGraph,x_\[DirectedEdge]y_:>y\[DirectedEdge]x],
         If[ OptionValue["ShowLabels"]===Automatic,
             VertexLabels->newLabels,
             VertexLabels->None
@@ -348,8 +348,8 @@ CompactEvaluatedTreeForm[expr_,values_,opts: OptionsPattern[]] :=
         FilterRules[{opts},Options[Graph]]
         ];
         HighlightGraph[
-        graph,
-        Join[highlightedEdges,DecorateVertexes[labels]],
+        ReplaceAll[graph,x_\[DirectedEdge]y_:>y\[DirectedEdge]x],
+        Join[ReplaceAll[highlightedEdges,x_\[DirectedEdge]y_:>y\[DirectedEdge]x],DecorateVertexes[labels]],
         VertexSize->0.2,
         FilterRules[{opts},Options[HighlightGraph]]
         ]

@@ -15,7 +15,7 @@ BeginPackage["CPUEmulator`"]
 (*Package description*)
 
 
-OpCode::usage = "\!\(\*
+EmuOpCode::usage = "\!\(\*
 StyleBox[\"OpCode\",\nFontWeight->\"Bold\"]\)[\!\(\*
 StyleBox[\"mnemonic\",\nFontSlant->\"Italic\"]\)] returns the opcode associated with \!\(\*
 StyleBox[\"mnemonic\",\nFontSlant->\"Italic\"]\).";
@@ -103,24 +103,26 @@ CUStatusPlot::usage = "\!\(\*
 StyleBox[\"CUStatusPlot\",\nFontWeight->\"Bold\"]\)[] plot the CU registers.";
 StackPlot::usage = "\!\(\*
 StyleBox[\"StackPlot\",\nFontWeight->\"Bold\"]\)[] plot the content of the stack.";
-CPUPlot::usage = "\!\(\*
+EmuCPUPlot::usage = "\!\(\*
 StyleBox[\"CPUPlot\",\nFontWeight->\"Bold\"]\)[] plot RAM, ALU, CU and stack.";
 
-LoadProgram::usage = "\!\(\*
+EmuAssemblyCompile::usage = "";
+EmuRAM::usage = "";
+EmuLoadProgram::usage = "\!\(\*
 StyleBox[\"LoadProgram\",\nFontWeight->\"Bold\"]\)[\!\(\*
 StyleBox[\"program\",\nFontSlant->\"Italic\"]\)] load program to RAM.";
-ClearProgram::usage = "\!\(\*
+EmuClearProgram::usage = "\!\(\*
 StyleBox[\"ClearProgram\",\nFontWeight->\"Bold\"]\)[] clear RAM and fill it with zero values.";
 
-InstructionsPlot::usage = "\!\(\*
+EmuInstructionsPlot::usage = "\!\(\*
 StyleBox[\"InstructionsPlot\",\nFontWeight->\"Bold\"]\)[\!\(\*
 StyleBox[\"code\",\nFontSlant->\"Italic\"]\)] plot the instructions in assembler.";
-OutputPlot::usage = "\!\(\*
+EmuOutputPlot::usage = "\!\(\*
 StyleBox[\"OutputPlot\",\nFontWeight->\"Bold\"]\)[] plot the output buffer.";
-ExecutionPlot::usage = "\!\(\*
+EmuExecutionPlot::usage = "\!\(\*
 StyleBox[\"ExecutionPlot\",\nFontWeight->\"Bold\"]\)[\!\(\*
 StyleBox[\"code\",\nFontSlant->\"Italic\"]\)] plot RAM, ALU, CU, output, instructions and stack.";
-ViewExecution::usage = "\!\(\*
+EmuViewExecution::usage = "\!\(\*
 StyleBox[\"ViewExecution\",\nFontWeight->\"Bold\"]\)[\!\(\*
 StyleBox[\"code\",\nFontSlant->\"Italic\"]\), \!\(\*
 StyleBox[\"maxIterations\",\nFontSlant->\"Italic\"]\)] view every execution step in a dynamic panel.";
@@ -145,7 +147,7 @@ cpuMnemonics = {
 };
 opcodes = Thread[cpuMnemonics->Take[Tuples[{0,1}, 8], Length[cpuMnemonics]]];
 revOpcodes = Map[Reverse, opcodes];
-OpCode[mnemonic_] := ReplaceAll[mnemonic, opcodes];
+EmuOpCode[mnemonic_] := ReplaceAll[mnemonic, opcodes];
 
 
 (* ::Subchapter:: *)
@@ -160,6 +162,7 @@ BinaryToDecimal[l_] := FromDigits[l,2];
 BinaryIncrement[l_,n_ :1] := DecimalToBinary[BinaryToDecimal[l]+n,Length[l]];
 BinaryDecrement[l_, n_ :1] := DecimalToBinary[BinaryToDecimal[l]-n,Length[l]];
 
+AddressAdvance[] := (addressRegister = BinaryIncrement[addressRegister, 2]);
 UpdateParity[] := If[EvenQ[BinaryToDecimal[ARegister]],ALUParityFlag = 1, ALUParityFlag = 0];
 UpdateALU[] := Block[{n},
     n = BinaryToDecimal[ARegister];
@@ -280,31 +283,30 @@ ResetCPU[] := Block[{},
 ];
 ResetCPU[];
 
-AddressAdvance[] := (addressRegister = BinaryIncrement[addressRegister, 2]);
 CPU[]:=Block[{},
     If[!halted,
         instructionRegister = Part[RAM, BinaryToDecimal[addressRegister]+1];
         parameterRegister = Part[RAM, BinaryToDecimal[addressRegister]+2];
 
-        If[instructionRegister == OpCode["LoadA"], LoadA[parameterRegister]];
-        If[instructionRegister == OpCode["LoadB"],LoadB[parameterRegister]];
-        If[instructionRegister == OpCode["SetA"], SetA[parameterRegister]];
-        If[instructionRegister == OpCode["SetB"], SetB[parameterRegister]];
-        If[instructionRegister == OpCode["Store"], Store[parameterRegister]];
-        If[instructionRegister == OpCode["Add"], Add[]];
-        If[instructionRegister == OpCode["Substract"], Substract[]];
-        If[instructionRegister == OpCode["Increment"], UIncrement[]];
-        If[instructionRegister == OpCode["Decrement"], UDecrement[]];
-        If[instructionRegister == OpCode["Print"], PrintA[parameterRegister]];
+        If[instructionRegister == EmuOpCode["LoadA"], LoadA[parameterRegister]];
+        If[instructionRegister == EmuOpCode["LoadB"],LoadB[parameterRegister]];
+        If[instructionRegister == EmuOpCode["SetA"], SetA[parameterRegister]];
+        If[instructionRegister == EmuOpCode["SetB"], SetB[parameterRegister]];
+        If[instructionRegister == EmuOpCode["Store"], Store[parameterRegister]];
+        If[instructionRegister == EmuOpCode["Add"], Add[]];
+        If[instructionRegister == EmuOpCode["Substract"], Substract[]];
+        If[instructionRegister == EmuOpCode["Increment"], UIncrement[]];
+        If[instructionRegister == EmuOpCode["Decrement"], UDecrement[]];
+        If[instructionRegister == EmuOpCode["Print"], PrintA[parameterRegister]];
 
-        If[instructionRegister == OpCode["Jump"], Jump[parameterRegister]];
-        If[instructionRegister == OpCode["JumpPos"], JumpConditional[parameterRegister, ALUPositiveFlag]];
-        If[instructionRegister == OpCode["JumpNeg"], JumpConditional[parameterRegister, ALUNegativeFlag]];
-        If[instructionRegister == OpCode["JumpZero"], JumpConditional[parameterRegister, ALUZeroFlag]];
-        If[instructionRegister == OpCode["JumpNotZero"], JumpConditional[parameterRegister, ALUNotZeroFlag]];
-        If[instructionRegister == OpCode["JumpOdd"], JumpConditional[parameterRegister, BinaryNot[ALUParityFlag]]];
-        If[instructionRegister == OpCode["Call"], Call[parameterRegister]];
-        If[instructionRegister == OpCode["Return"], ReturnC[]];
+        If[instructionRegister == EmuOpCode["Jump"], Jump[parameterRegister]];
+        If[instructionRegister == EmuOpCode["JumpPos"], JumpConditional[parameterRegister, ALUPositiveFlag]];
+        If[instructionRegister == EmuOpCode["JumpNeg"], JumpConditional[parameterRegister, ALUNegativeFlag]];
+        If[instructionRegister == EmuOpCode["JumpZero"], JumpConditional[parameterRegister, ALUZeroFlag]];
+        If[instructionRegister == EmuOpCode["JumpNotZero"], JumpConditional[parameterRegister, ALUNotZeroFlag]];
+        If[instructionRegister == EmuOpCode["JumpOdd"], JumpConditional[parameterRegister, BinaryNot[ALUParityFlag]]];
+        If[instructionRegister == EmuOpCode["Call"], Call[parameterRegister]];
+        If[instructionRegister == EmuOpCode["Return"], ReturnC[]];
     ]
 ];
 
@@ -314,8 +316,9 @@ CPU[]:=Block[{},
 
 
 (* ::Input::Initialization:: *)
-LoadProgram[program_] := Block[{x}, RAM = PadRight[program, 256, x] /. x->{0,0,0,0,0,0,0,0}];
-ClearProgram[] := (RAM = ConstantArray[{0,0,0,0,0,0,0,0}, 256]);
+EmuLoadProgram[program_] := Block[{x}, RAM = PadRight[program, 256, x] /. x->{0,0,0,0,0,0,0,0}];
+EmuClearProgram[] := (RAM = ConstantArray[{0,0,0,0,0,0,0,0}, 256]);
+EmuRAM[] := RAM;
 
 
 (* ::Subchapter:: *)
@@ -403,7 +406,7 @@ StackPlot[] := Block[{cursor, stackInDecimal, plt},
     Panel[Grid[plt, Background->{None, {1->LightGreen, cursor->Yellow}}, Frame->All], Style["Stack", Bold]]
 ];
 
-CPUPlot[] := Panel[Grid[{{ALUStatusPlot[], Column[{CUStatusPlot[], StackPlot[]}], RAMPlot[]}}, Alignment->Top], Style["CPU", Bold]];
+EmuCPUPlot[] := Panel[Grid[{{ALUStatusPlot[], Column[{CUStatusPlot[], StackPlot[]}], RAMPlot[]}}, Alignment->Top], Style["CPU", Bold]];
 
 
 (* ::Subchapter:: *)
@@ -411,12 +414,12 @@ CPUPlot[] := Panel[Grid[{{ALUStatusPlot[], Column[{CUStatusPlot[], StackPlot[]}]
 
 
 (* ::Input::Initialization:: *)
-GetInstructions[asmcode_] := Block[{separated, completed},
+EmuGetInstructions[asmcode_] := Block[{separated, completed},
     separated = DeleteCases[Map[StringSplit, StringSplit[asmcode, "\n"]], {}];
     completed = ReplaceAll[separated, l_ /; (Length[l] == 1) :> Append[l, 0]];
     Return[completed];
 ];
-GetPosition[instructions_, token_] := Block[{pos, labels, countingRules},
+EmuGetPosition[instructions_, token_] := Block[{pos, labels, countingRules},
     pos = Position[instructions, token];
     If[Length[pos]>1, Return[$Failed]];
     labels = Take[instructions, pos[[1,1]]-1][[All,1]];
@@ -424,24 +427,24 @@ GetPosition[instructions_, token_] := Block[{pos, labels, countingRules},
 
     Total[ReplaceAll[labels, countingRules]]
 ];
-ProcessTags[instructions_] := Block[{labels,variablePos},
-    labels = Cases[instructions,{"Label",tag_} :> (tag->GetPosition[instructions, {"Label", tag}])];
-    variablePos = Cases[instructions, {"Declare", tag_, value_} :> (tag->GetPosition[instructions, {"Declare", tag, value}])];
+EmuProcessTags[instructions_] := Block[{labels,variablePos},
+    labels = Cases[instructions,{"Label",tag_} :> (tag->EmuGetPosition[instructions, {"Label", tag}])];
+    variablePos = Cases[instructions, {"Declare", tag_, value_} :> (tag->EmuGetPosition[instructions, {"Declare", tag, value}])];
     Join[labels, variablePos]
 ];
-MachineInstructions[instructions_] := Block[{setNumeric, removeLabels, replaceTags},
+EmuMachineInstructions[instructions_] := Block[{setNumeric, removeLabels, replaceTags},
     setNumeric = ReplaceAll[instructions, {{"Declare", _, value_} :> ToExpression[value], {"SetA", value_} :> {"SetA", ToExpression[value]}, {"SetB", value_} :> {"SetB", ToExpression[value]} }];
     removeLabels = DeleteCases[setNumeric, {"Label",__}];
-    replaceTags = ReplaceAll[removeLabels, ProcessTags[instructions]];
+    replaceTags = ReplaceAll[removeLabels, EmuProcessTags[instructions]];
     Return[replaceTags];
 ];
-AssemblyCompile[asmcode_] := Block[{linearized, rules, machineCode},
-    linearized = Flatten[MachineInstructions[GetInstructions[asmcode]]];
+EmuAssemblyCompile[asmcode_] := Block[{linearized, rules, machineCode},
+    linearized = Flatten[EmuMachineInstructions[EmuGetInstructions[asmcode]]];
     rules = Append[opcodes, n_Integer :> DecimalToBinary[n]];
     machineCode = ReplaceAll[linearized, rules];
     Return[machineCode];
 ];
-InstructionsPanel[machineInstructions_,from_] := Block[{cursor,instructions},
+EmuInstructionsPanel[machineInstructions_,from_] := Block[{cursor,instructions},
     cursor = BinaryToDecimal[addressRegister]-from+1;
     If[Negative[cursor], cursor = 0];
     instructions = Thread[{Range[from, from+Length[Flatten[machineInstructions]]-1], Flatten[machineInstructions]}];
@@ -451,9 +454,9 @@ InstructionsPanel[machineInstructions_,from_] := Block[{cursor,instructions},
         Background->{{LightGreen}, {cursor->Yellow}}
     ]
 ];
-InstructionsPlot[code_] := Block[{mi,tabs,currentAddress,currentTab},
-    mi = Flatten[MachineInstructions[GetInstructions[code]]];
-    tabs = MapThread[InstructionsPanel, {Partition[mi, UpTo[16]], Range[0, Length[mi]-1, 16]}];
+EmuInstructionsPlot[code_] := Block[{mi,tabs,currentAddress,currentTab},
+    mi = Flatten[EmuMachineInstructions[EmuGetInstructions[code]]];
+    tabs = MapThread[EmuInstructionsPanel, {Partition[mi, UpTo[16]], Range[0, Length[mi]-1, 16]}];
 
     currentTab = Ceiling[(BinaryToDecimal[addressRegister]+1)/16];
 
@@ -463,7 +466,7 @@ InstructionsPlot[code_] := Block[{mi,tabs,currentAddress,currentTab},
 
 (* ::Input::Initialization:: *)
 ColumnJoin[l_] := StringJoin[Riffle[DeleteCases[l,""], "\n"]];
-OutputPlot[] := Panel[
+EmuOutputPlot[] := Panel[
     InputField[
         ColumnJoin[Map[ToString, outputBuffer]], String,
         FieldSize->{10,{0,Infinity}},
@@ -471,21 +474,21 @@ OutputPlot[] := Panel[
     ],
     Style["Output", Bold]
 ];
-ExecutionPlot[code_] := Block[{cpuPanel, memoryAndOutput},
+EmuExecutionPlot[code_] := Block[{cpuPanel, memoryAndOutput},
     cpuPanel = Panel[Grid[{{ALUStatusPlot[], Column[{CUStatusPlot[], StackPlot[]}]}}, Alignment->Top], Style["CPU",Bold]];
-    memoryAndOutput = Panel[Grid[{{InstructionsPlot[code], RAMPlot[], OutputPlot[]}}, Alignment->Top], Style["Memory and output",Bold]];
+    memoryAndOutput = Panel[Grid[{{EmuInstructionsPlot[code], RAMPlot[], EmuOutputPlot[]}}, Alignment->Top], Style["Memory and output",Bold]];
 
     Column[{cpuPanel, memoryAndOutput}]
 ];
-ViewExecution[code_, maxIterations_ :100] := DynamicModule[{program, frames, i = 0},
+EmuViewExecution[code_, maxIterations_ :100] := DynamicModule[{program, frames, i = 0},
     ResetCPU[];
-    program = AssemblyCompile[code];
-    LoadProgram[program];
-    frames = {ExecutionPlot[code]};
+    program = EmuAssemblyCompile[code];
+    EmuLoadProgram[program];
+    frames = {EmuExecutionPlot[code]};
 
     While[!halted && i<maxIterations,
         CPU[];
-        AppendTo[frames, ExecutionPlot[code]];
+        AppendTo[frames, EmuExecutionPlot[code]];
         i++;
     ];
 

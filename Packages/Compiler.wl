@@ -249,6 +249,8 @@ SynthesizeTree::usage ="\!\(\*
 StyleBox[\"SynthesizeTree\",\nFontWeight->\"Bold\"]\)[\!\(\*
 StyleBox[\"parseTree\",\nFontSlant->\"Italic\"]\)] synthesizes the \!\(\*
 StyleBox[\"parseTree\",\nFontSlant->\"Italic\"]\) by using the semantic actions in the grammar.";
+Synthesis::usage = "";
+ViewSynthesisProcess::usage = "";
 
 ProcedureProcessLabels::usage ="\!\(\*
 StyleBox[\"ProcedureProcessLabels\",\nFontWeight->\"Bold\"]\)[\!\(\*
@@ -322,11 +324,11 @@ Parse::badInput = "Incorrect input";
 Begin["`Private`"]
 
 
-(* ::Subchapter:: *)
+(* ::Subchapter::Closed:: *)
 (*Finite state machine*)
 
 
-(* ::Subsection:: *)
+(* ::Subsection::Closed:: *)
 (*Deterministic finite automaton (DFA)*)
 
 
@@ -467,7 +469,7 @@ DFAExecutionPlot[dfa_Association, inputString_, OptionsPattern[]] := DynamicModu
 ];
 
 
-(* ::Subsection:: *)
+(* ::Subsection::Closed:: *)
 (*Non-deterministic Finite Automata (NFA)*)
 
 
@@ -872,7 +874,7 @@ NFAExecutionPlot[nfa_Association, inputString_, OptionsPattern[]] := DynamicModu
 ];
 
 
-(* ::Subchapter:: *)
+(* ::Subchapter::Closed:: *)
 (*Regular expressions*)
 
 
@@ -955,7 +957,7 @@ RegexCompute[fa_, input_] := Block[{trace, result, recognizedTokens},
 ];
 
 
-(* ::Subchapter:: *)
+(* ::Subchapter::Closed:: *)
 (*Lexer*)
 
 
@@ -1067,7 +1069,7 @@ Lint[program_, symbolTokens_, keywordTokens_, colorRules_] := Block[{tokens, hig
 ];
 
 
-(* ::Subchapter:: *)
+(* ::Subchapter::Closed:: *)
 (*Parser*)
 
 
@@ -1237,12 +1239,26 @@ Parse[input_, grammar_, OptionsPattern[]] := Block[{grammarCheck, pGrammar, trac
     ];
 ];
 
-ParseTree[input_, grammar_] := Block[{parseTree, startProduction, styledParseTree, styleRules},
-    parseTree = First@Parse[input, grammar];
-    styleRules = {NonTerm[x_] :> Style["NonTerm(" <> ToString[x] <> ")",Blue], Term[x_] :> Style["Term(" <> ToString[x] <> ")",Red]};
-    styledParseTree = ReplaceAll[parseTree, styleRules];
-    startProduction = First[First[styledParseTree]];
-    TreePlot[styledParseTree, Automatic, startProduction, VertexLabeling->True, AspectRatio->1/4]
+ParseTree[input_,grammar_]:=Block[{parseTree,startProduction,styledParseTree,styleRules,nodes,formattedNodes,plainNodes,nodeColorStyle},
+parseTree = First@Parse[input,grammar];
+styleRules = {NonTerm[x_]:>Style[ToString[x],Blue],Term[x_]:>Style[ToString[x],Red]};
+styledParseTree = ReplaceAll[parseTree,styleRules];
+startProduction = First[First[styledParseTree]];
+
+nodes = Flatten[Map[{First[#],Last[#]}&,styledParseTree],1];
+formattedNodes = Map[#->#[[1]]&,nodes];
+
+plainNodes = Flatten[Map[{First[#],Last[#]}&,parseTree],1];
+nodeColorStyle = ReplaceAll[plainNodes,
+{
+{NonTerm[x_],y_}:>({Style[ToString[x],Blue],y}->Blue),
+{Term[x_],y_}:>({Style[ToString[x],Red],y}->Red),
+{Term[x_],y_,z_}:>({Style[ToString[x],Red],y,z}->Red),
+{EmptyString[],_}:> Nothing
+}
+];
+
+TreePlot[styledParseTree,Automatic,startProduction,VertexLabels->formattedNodes,VertexStyle->nodeColorStyle]
 ];
 
 
@@ -1250,7 +1266,7 @@ ParseTree[input_, grammar_] := Block[{parseTree, startProduction, styledParseTre
 (*PL/0 Implementation*)
 
 
-(* ::Subchapter:: *)
+(* ::Subchapter::Closed:: *)
 (*Lexer tokens definition*)
 
 
@@ -1341,7 +1357,7 @@ Tokenize[program_] := Tokenize[program, symbolRecognizer, keywordRecognizer];
 Lint[program_] := Lint[program, symbolRecognizer, keywordRecognizer, colorRules];
 
 
-(* ::Subchapter:: *)
+(* ::Subchapter::Closed:: *)
 (*Grammar definition*)
 
 
@@ -1729,9 +1745,10 @@ grammar = {
 
 
 Parse[input_] := Parse[input, grammar];
+ParseTree[input_] := ParseTree[input, grammar];
 
 
-(* ::Subchapter:: *)
+(* ::Subchapter::Closed:: *)
 (*Parse tree synthesization*)
 
 
@@ -1807,6 +1824,7 @@ SynthesizeTree[parseTree_] := Block[{startSymbol, depthFirstScan, symbolType, sy
 
 (* ::Input::Initialization:: *)
 FormatSynthValues[groupedSynthetization_] := MapAt[First[Level[#, 2]]&, groupedSynthetization, {All, 1}];
+Synthesis[parseTree_]:=ReplaceAll[{NonTerm["Program"],1}["TACode"],SynthesizeTree[parseTree]];
 ViewSynthesis[parseTree_] := Block[{grouped},
     grouped = GroupBy[SynthesizeTree[parseTree], Head[First[#]]&];
     Dataset@Map[FormatSynthValues, grouped]
@@ -1822,49 +1840,50 @@ ViewSynthesis[parseTree_] := Block[{grouped},
 
 
 (* ::Input::Initialization:: *)
-IsLabelQ[s_] := And[StringStartsQ[s, "<"],  StringEndsQ[s, ">"]];
-IsTempQ[s_] := StringStartsQ[s, "$"];
-InsertSequence[l1_, l2_, n_] := FlattenAt[Insert[l1, l2, n], n];
+IsLabelQ[s_]:=And[StringStartsQ[s, "<"], StringEndsQ[s, ">"]];
+IsTempQ[s_]:=StringStartsQ[s, "$"];
+InsertSequence[l1_,l2_,n_]:=FlattenAt[Insert[l1,l2,n],n];
 
-ProcedureProcessLabels[ic_, from_, to_, globalVar_] := Block[{name, procInstructions, labels, tempSymbols, replaceLabelsRules, replaceTempSymbolsRules, tempDeclarations, processed},
-    name = StringReplace[Last[Extract[ic, {from}]], "<"~~x__~~">" :> x];
-    procInstructions = Flatten[Take[ic, {from+1, to-1}]];
-    labels = DeleteDuplicates[Select[procInstructions, IsLabelQ[#] && !MemberQ[globalVar, #]&]];
-    tempSymbols = DeleteDuplicates[Select[procInstructions, IsTempQ]];
-    replaceLabelsRules = Map[#->StringReplace[#, "<"~~x__~~">" :> StringJoin["<", name, "::", x, ">"]]&, labels];
-    replaceTempSymbolsRules = Map[#->StringJoin["<", name, "::", #, ">"]&, tempSymbols];
-    tempDeclarations = Thread[{"declare_var", replaceTempSymbolsRules[[All, 2]]}];
+ProcedureProcessLabelsAndTemps[ic_,from_,to_,globalVar_]:=Block[{name,procInstructions,labels,tempSymbols,replaceLabelsRules,replaceTempSymbolsRules,tempDeclarations,processed},
+name = StringReplace[Last[Extract[ic,{from}]],"<"~~x__~~">":>x];
+procInstructions = Flatten[Take[ic,{from+1,to-1}]];
+labels = DeleteDuplicates[Select[procInstructions,IsLabelQ[#]&&!MemberQ[globalVar,#]&]];
+tempSymbols = DeleteDuplicates[Select[procInstructions,IsTempQ]];
+replaceLabelsRules = Map[#->StringReplace[#,"<"~~x__~~">":>StringJoin["<",name,"::",x,">"]]&,labels];
+replaceTempSymbolsRules = Map[#->StringJoin["<",name,"::",#,">"]&,tempSymbols];
+tempDeclarations = Thread[{"declare_var",replaceTempSymbolsRules[[All,2]]}];
 
-    processed = ReplaceAll[Take[ic, {from, to}], Join[replaceLabelsRules, replaceTempSymbolsRules]];
-    processed = InsertSequence[processed, tempDeclarations, -2];
-    Return[processed];
+processed = ReplaceAll[Take[ic,{from,to}],  Join[replaceLabelsRules,replaceTempSymbolsRules]];
+processed = InsertSequence[processed,tempDeclarations,-2];
+Return[processed];
 ];
-GlobalProcessLabelsAndTemps[ic_] := Block[{procInstructions, tempSymbols, replaceTempSymbolsRules, tempDeclarations, processed},
-   procInstructions = Flatten[ic];
-   tempSymbols = DeleteDuplicates[Select[procInstructions, IsTempQ]];
-   replaceTempSymbolsRules =  Map[# -> StringJoin["<", #, ">"] &, tempSymbols];
-   tempDeclarations = Thread[{"declare_var", replaceTempSymbolsRules[[All, 2]]}];
-   processed = ReplaceAll[ic,  replaceTempSymbolsRules];
-   processed = InsertSequence[processed, tempDeclarations, -2];
-   Return[processed];
+GlobalProcessLabelsAndTemps[ic_]:=Block[{procInstructions,tempSymbols,replaceTempSymbolsRules,tempDeclarations,processed},
+procInstructions = Flatten[ic];
+tempSymbols = DeleteDuplicates[Select[procInstructions,IsTempQ]];
+replaceTempSymbolsRules = Map[#->StringJoin["<",#,">"]&,tempSymbols];
+tempDeclarations = Thread[{"declare_var",replaceTempSymbolsRules[[All,2]]}];
+processed = ReplaceAll[ic,  replaceTempSymbolsRules];
+processed = InsertSequence[processed,tempDeclarations,-2];
+Return[processed];
 ];
-ICProcessLabels[ic_] := Block[{splitted, preProc, pos, parts, processed, postProc, globalVar, allProcessed, procICCode},
-    splitted = Map[StringSplit, StringSplit[ic, "\n"]];
-    pos = Flatten[Position[splitted, {"begin_proc", _} | {"end_proc", _}]];
-    If[pos != {},
-        preProc = GlobalProcessLabelsAndTemps[Take[splitted, {1, First[pos]-1}]];
-        postProc = GlobalProcessLabelsAndTemps[Take[splitted, {Last[pos]+1, Length[splitted]}]];
-        globalVar = Cases[Join[preProc, postProc], {"declare_var", label_} :> label];
+GlobalProcessLabelsAndTemps[{}] = {};
+ICProcessLabelsAndTemps[ic_]:=Block[{splitted,preProc,pos,parts,processed,postProc,globalVar,allProcessed,procICCode},
+splitted = Map[StringSplit,StringSplit[ic,"\n"]];
+pos = Flatten[Position[splitted,{"begin_proc",_}|{"end_proc",_}]];
+If[pos != {},
+preProc = GlobalProcessLabelsAndTemps[Take[splitted,{1,First[pos]-1}]];
+postProc = GlobalProcessLabelsAndTemps[Take[splitted,{Last[pos]+1,Length[splitted]}]];
+globalVar = Cases[Join[preProc,postProc],{"declare_var",label_}:>label];
 
-        parts = Partition[pos, 2];
-        processed = Map[ProcedureProcessLabels[splitted, First[#], Last[#], globalVar]&, parts];
+parts = Partition[pos,2];
+processed = Map[ProcedureProcessLabelsAndTemps[splitted,First[#],Last[#],globalVar]&,parts];
 
-        allProcessed = Join[preProc, Concatenate[processed], postProc];
-        ,
-        allProcessed = GlobalProcessLabelsAndTemps[splitted];
-    ];
-    procICCode = StringJoin[Riffle[Map[LineJoin, allProcessed], "\n"]];
-    Return[procICCode];
+allProcessed = Join[preProc,Concatenate[processed],postProc];
+,
+allProcessed = GlobalProcessLabelsAndTemps[splitted];
+];
+procICCode = StringJoin[Riffle[Map[LineJoin,allProcessed],"\n"]];
+Return[procICCode];
 ];
 
 
@@ -1876,7 +1895,7 @@ PL0ParseAndSynthesize[code_] := Block[{tokens,parseTree,synthesized},
     synthesized = ReplaceAll[{NonTerm["Program"], 1}["TACode"], SynthesizeTree[parseTree]];
     Return[synthesized];
 ];
-PL0CompileToIC[code_] := ICProcessLabels[PL0ParseAndSynthesize[code]];
+PL0CompileToIC[code_] := ICProcessLabelsAndTemps[PL0ParseAndSynthesize[code]];
 
 
 (* ::Input::Initialization:: *)
