@@ -20,10 +20,13 @@ VisualizeGate::usage = "";
 VisualizeAdder::usage = "";
 VisualizeMultiplexer::usage = "";
 PlotExpression::usage = "";
+PlotSystem::usage = "";
 PlotInteractiveSystem::usage = "";
+PlotSystemEvaluations::usage = "";
 CompactTreeForm::usage = "";
 CompactEvaluatedTreeForm::usage = "";
 PlotCompactInteractiveSystem::usage = "";
+PlotCompactSystemEvaluations::usage = "";
 
 Mux2to1::usage = "";
 Mux4to1::usage = "";
@@ -239,6 +242,19 @@ SelectValue[{op_,value_}] :=
     value;
 
 SetOptions[$FrontEndSession,DynamicEvaluationTimeout->20];
+
+PlotSystem[system_,values_,opts: OptionsPattern[]]:=
+TreeForm[
+StructuredNestedEvaluate[system,values],
+EdgeRenderingFunction->(
+ReleaseHold[SelectColor[#,SelectValue[#2]]]&),
+VertexRenderingFunction->({NodeColor[#2],EdgeForm[Black],Disk[#,.1],Black,Text[SelectValue[#2],#1]}&),
+ImageSize->1000,
+AspectRatio->1/2,
+Background->Black,
+FilterRules[{opts},Options[TreeForm]]
+];
+
 PlotInteractiveSystem[system_,plotVertex_:({NodeColor[#2],EdgeForm[Black],Disk[#,.1],Black,Text[SelectValue[#2],#1]}&)] :=
     DynamicModule[{symbols,controllerSymbols,boxes,controls,plot},
     symbols = GetSymbols[system];
@@ -259,10 +275,26 @@ PlotInteractiveSystem[system_,plotVertex_:({NodeColor[#2],EdgeForm[Black],Disk[#
     Panel[Column[{controls,Framed[plot]}]]
     ,
     SaveDefinitions->True
-    ];
+];
+PlotSystemEvaluations[system_,opts: OptionsPattern[]]:=Block[{symbols,replacements},
+symbols = GetSymbols[system];
+replacements = Map[symbols->#&,Tuples[{0,1},Length[symbols]]];
+Map[
+Panel[
+Column[
+{
+Framed[Row[{Style["Input: ",Bold],Thread[#]}]],
+Framed[Row[{Style["Result: ",Bold],ReplaceAll[system,Thread[#]]}]],
+Framed[PlotSystem[system,Thread[#],opts]]
+}
+]
+]&,
+replacements
+]
+];
 
 
-(* ::Subsection:: *)
+(* ::Subsection::Closed:: *)
 (*Compact tree graph*)
 
 
@@ -384,7 +416,24 @@ PlotCompactInteractiveSystem[system_,opts: OptionsPattern[]] :=
     ]
     ,
     SaveDefinitions->True
-    ];
+];
+
+PlotCompactSystemEvaluations[system_,opts: OptionsPattern[]]:=Block[{symbols,replacements},
+symbols = GetSymbols[system];
+replacements = Map[symbols->#&,Tuples[{0,1},Length[symbols]]];
+Map[
+Panel[
+Column[
+{
+Framed[Row[{Style["Input: ",Bold],Thread[#]}]],
+Framed[Row[{Style["Result: ",Bold],ReplaceAll[system,Thread[#]]}]],
+Framed[CompactEvaluatedTreeForm[system,Thread[#],opts]]
+}
+]
+]&,
+replacements
+]
+];
 
 
 (* ::Section:: *)

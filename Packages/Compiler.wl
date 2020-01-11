@@ -1357,7 +1357,7 @@ Tokenize[program_] := Tokenize[program, symbolRecognizer, keywordRecognizer];
 Lint[program_] := Lint[program, symbolRecognizer, keywordRecognizer, colorRules];
 
 
-(* ::Subchapter::Closed:: *)
+(* ::Subchapter:: *)
 (*Grammar definition*)
 
 
@@ -1561,7 +1561,7 @@ grammar = {
             {
                 NonTerm["Expression1"]["TACode"], 
                 NonTerm["Expression2"]["TACode"], 
-                LineJoin[{"compare", NonTerm["Expression1"]["Value"], NonTerm["Expression2"]["Value"]}]
+                LineJoin[{"compare", NonTerm["Expression2"]["Value"],NonTerm["Expression1"]["Value"]}]
             }
         ], 
         "Conditional"->NonTerm["Op"]["Conditional"]
@@ -1831,7 +1831,7 @@ ViewSynthesis[parseTree_] := Block[{grouped},
 ];
 
 
-(* ::Subchapter:: *)
+(* ::Subchapter::Closed:: *)
 (*Compilation to intermediate code*)
 
 
