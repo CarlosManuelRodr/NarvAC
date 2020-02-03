@@ -1386,361 +1386,365 @@ LabelIdentifier[s_] := StringJoin["<", s, ">"];
 
 (* ::Input::Initialization:: *)
 grammar = {
-    (* Program *)
-    <|"From"->"Program","To"->{NonTerm["Block"], Term["Dot"]},
-    "Action"->{"TACode" :> NonTerm["Block"]["TACode"]}|>,
-    <|"From"->"Block","To"->{NonTerm["ConstOpt"], NonTerm["VarOpt"], NonTerm["ProcRep"], NonTerm["Statement"]},
-    "Action"->{
-        "Value" :> "",
-        "TACode" :> ColumnJoin[
-            {
-                NonTerm["Statement"]["TACode"], 
-                "return",
-                NonTerm["ProcRep"]["TACode"], 
-                NonTerm["ConstOpt"]["TACode"], 
-                NonTerm["VarOpt"]["TACode"]
-            }
-        ]
-    }|>,
+(* Program *)
+<|"From"->"Program","To"->{NonTerm["Block"],Term["Dot"]},
+"Action"->{"TACode":>NonTerm["Block"]["TACode"]}|>,
+<|"From"->"Block","To"->{NonTerm["ConstOpt"],NonTerm["VarOpt"],NonTerm["ProcRep"],NonTerm["Statement"]},
+"Action"->{
+"Value":>"",
+"TACode":>ColumnJoin[
+{
+NonTerm["Statement"]["TACode"],
+"return",
+NonTerm["ProcRep"]["TACode"],
+NonTerm["ConstOpt"]["TACode"],
+NonTerm["VarOpt"]["TACode"]
+}
+]
+}|>,
 
-    <|"From"->"ConstOpt","To"->{Term["Const"], Term["Identifier"], Term["Equal"], Term["NumberLiteral"], NonTerm["ConstOptRep"], Term["Semicolon"]},
-    "Action"->{
-        "Value" :> "",
-        "TACode" :> LineJoin[{"declare_const", LabelIdentifier[Term["Identifier"]["Value"]], Term["NumberLiteral"]["Value"]}]
-    }
-    |>,
-    <|"From"->"ConstOpt","To"->EmptyString[], 
-    "Action"->{"Value"->"","TACode"->""}|>,
+<|"From"->"ConstOpt","To"->{Term["Const"],Term["Identifier"],Term["Equal"],Term["NumberLiteral"],NonTerm["ConstOptRep"],Term["Semicolon"]},
+"Action"->{
+"Value":>"",
+"TACode":>LineJoin[{"declare_const",LabelIdentifier[Term["Identifier"]["Value"]],Term["NumberLiteral"]["Value"]}]
+}
+|>,
+<|"From"->"ConstOpt","To"->EmptyString[],
+"Action"->{"Value"->"","TACode"->""}|>,
 
-    <|"From"->"ConstOptRep","To"->{Term["Comma"],  Term["Identifier"], Term["Equal"], Term["NumberLiteral"], NonTerm["ConstOptRep"]},
-    "Action"->{
-        "TACode" :> ColumnJoin[
-            {
-                LineJoin[{"declare_const",LabelIdentifier[Term["Identifier"]["Value"]], Term["NumberLiteral"]["Value"]}], 
-                NonTerm["ConstOptRep"]["TACode"]
-            }
-        ]
-    }
-    |>,
-    <|"From"->"ConstOptRep", "To"->EmptyString[], 
-    "Action"->{"Value"->"", "TACode"->""}|>,
+<|"From"->"ConstOptRep","To"->{Term["Comma"], Term["Identifier"],Term["Equal"],Term["NumberLiteral"],NonTerm["ConstOptRep"]},
+"Action"->{
+"TACode":>ColumnJoin[
+{
+LineJoin[{"declare_const",LabelIdentifier[Term["Identifier"]["Value"]],Term["NumberLiteral"]["Value"]}],
+NonTerm["ConstOptRep"]["TACode"]
+}
+]
+}
+|>,
+<|"From"->"ConstOptRep","To"->EmptyString[],
+"Action"->{"Value"->"","TACode"->""}|>,
 
-    <|"From"->"VarOpt","To"->{Term["Var"], Term["Identifier"], NonTerm["VarOptRep"], Term["Semicolon"]},
-    "Action"->{
-        "Value" :> "",
-        "TACode" :> ColumnJoin[
-            {
-                LineJoin[{"declare_var", LabelIdentifier[Term["Identifier"]["Value"]]}], 
-                NonTerm["VarOptRep"]["TACode"]
-            }
-        ]
-    }|>,
-    <|"From"->"VarOpt","To"->EmptyString[], 
-    "Action"->{"Value"->"","TACode"->""}|>,
+<|"From"->"VarOpt","To"->{Term["Var"],Term["Identifier"],NonTerm["VarOptRep"],Term["Semicolon"]},
+"Action"->{
+"Value":>"",
+"TACode":>ColumnJoin[
+{
+LineJoin[{"declare_var",LabelIdentifier[Term["Identifier"]["Value"]]}],
+NonTerm["VarOptRep"]["TACode"]
+}
+]
+}|>,
+<|"From"->"VarOpt","To"->EmptyString[],
+"Action"->{"Value"->"","TACode"->""}|>,
 
-    <|"From"->"VarOptRep","To"->{Term["Comma"],  Term["Identifier"], NonTerm["VarOptRep"]},
-    "Action"->{
-        "Value" :> "",
-        "TACode" :> LineJoin[{"declare_var",LabelIdentifier[Term["Identifier"]["Value"]]}]
-    }
-    |>,
-    <|"From"->"VarOptRep","To"->EmptyString[], 
-    "Action"->{"Value"->"","TACode"->""}|>,
+<|"From"->"VarOptRep","To"->{Term["Comma"], Term["Identifier"],NonTerm["VarOptRep"]},
+"Action"->{
+"Value":>"",
+"TACode":>ColumnJoin[
+{
+LineJoin[{"declare_var",LabelIdentifier[Term["Identifier"]["Value"]]}],
+NonTerm["VarOptRep"]["TACode"]
+}
+]
+}
+|>,
+<|"From"->"VarOptRep","To"->EmptyString[],
+"Action"->{"Value"->"","TACode"->""}|>,
 
-    <|"From"->"ProcRep","To"->{Term["Procedure"], Term["Identifier"], Term["Semicolon"], NonTerm["Block"], Term["Semicolon"], NonTerm["ProcRep"]},
-    "Action"->{
-        "Value" :> Term["Identifier"]["Value"], 
-        "TACode" :> 
-            ColumnJoin[
-                {
-                    LineJoin[{"begin_proc",LabelIdentifier[Term["Identifier"]["Value"]]}], 
-                    NonTerm["Block"]["TACode"], 
-                    LineJoin[{"end_proc",LabelIdentifier[Term["Identifier"]["Value"]]}], 
-                    NonTerm["ProcRep"]["TACode"]
-                }
-            ]
-    }|>,
-    <|"From"->"ProcRep","To"->EmptyString[], 
-    "Action"->{"Value"->"","TACode"->""}|>,
+<|"From"->"ProcRep","To"->{Term["Procedure"],Term["Identifier"],Term["Semicolon"],NonTerm["Block"],Term["Semicolon"],NonTerm["ProcRep"]},
+"Action"->{
+"Value":>Term["Identifier"]["Value"],
+"TACode":>
+ColumnJoin[
+{
+LineJoin[{"begin_proc",LabelIdentifier[Term["Identifier"]["Value"]]}],
+NonTerm["Block"]["TACode"],
+LineJoin[{"end_proc",LabelIdentifier[Term["Identifier"]["Value"]]}],
+NonTerm["ProcRep"]["TACode"]
+}
+]
+}|>,
+<|"From"->"ProcRep","To"->EmptyString[],
+"Action"->{"Value"->"","TACode"->""}|>,
 
-    (* Statements *)
-    <|"From"->"Statement","To"->{Term["Identifier"], Term["Assign"], NonTerm["Expression"]},
-    "Action"->{
-        "Value" :> "",
-        "TACode" :> 
-            ColumnJoin[
-                {
-                    NonTerm["Expression"]["TACode"], 
-                    LineJoin[{"set",LabelIdentifier[Term["Identifier"]["Value"]], NonTerm["Expression"]["Value"]}]
-                }
-            ]
-    }|>,
-    <|"From"->"Statement","To"->{Term["Call"], Term["Identifier"]},
-    "Action"->{
-        "Value" :> "",
-        "TACode" :> LineJoin[{"call", LabelIdentifier[Term["Identifier"]["Value"]]}]
-    }|>,
-    <|"From"->"Statement","To"->{Term["Print"], Term["Identifier"]},
-    "Action"->{
-        "Value" :> "",
-        "TACode" :> LineJoin[{"print", LabelIdentifier[Term["Identifier"]["Value"]]}]
-    }|>,
-    <|"From"->"Statement","To"->{Term["Begin"], NonTerm["Statement"], NonTerm["StatementRep"], Term["End"]},
-    "Action"->{
-        "Value" :> "",
-        "TACode" :> 
-            ColumnJoin[
-                {
-                    NonTerm["Statement"]["TACode"], 
-                    NonTerm["StatementRep"]["TACode"]
-                }
-            ]
-    }|>,
-    <|"From"->"Statement","To"->{Term["If"], NonTerm["Condition"], Term["Then"], NonTerm["Statement"]},
-    "Action"->{
-        "Value" :> NewLabel[], 
-        "TACode" :> 
-            ColumnJoin[
-                {
-                    NonTerm["Condition"]["TACode"], 
-                    LineJoin[{NonTerm["Condition"]["Conditional"], LabelIdentifier[CurrentLabel["L"]]}], 
-                    NonTerm["Statement"]["TACode"], 
-                    LineJoin[{"label", LabelIdentifier[CurrentLabel["L"]]}]
-                }
-            ]
-    }|>,
-    <|"From"->"Statement", "To"->{Term["While"], NonTerm["Condition"], Term["Do"], NonTerm["Statement"]},
-    "Action"->{
-    "Value" :> NewLabel[], 
-    "TACode" :> 
-        ColumnJoin[
-            {
-                LineJoin[{"label", LabelIdentifier[CurrentLabel["L1"]]}], 
-                NonTerm["Condition"]["TACode"], 
-                LineJoin[{NonTerm["Condition"]["Conditional"], LabelIdentifier[CurrentLabel["L2"]]}], 
-                NonTerm["Statement"]["TACode"], 
-                LineJoin[{"goto", LabelIdentifier[CurrentLabel["L1"]]}], 
-                LineJoin[{"label", LabelIdentifier[CurrentLabel["L2"]]}]
-            }
-        ]
-    }|>,
-    <|"From"->"Statement","To"->EmptyString[], 
-    "Action"->{"Value"->"","TACode"->""}|>,
+(* Statements *)
+<|"From"->"Statement","To"->{Term["Identifier"],Term["Assign"],NonTerm["Expression"]},
+"Action"->{
+"Value":>"",
+"TACode":>
+ColumnJoin[
+{
+NonTerm["Expression"]["TACode"],
+LineJoin[{"set",LabelIdentifier[Term["Identifier"]["Value"]],NonTerm["Expression"]["Value"]}]
+}
+]
+}|>,
+<|"From"->"Statement","To"->{Term["Call"],Term["Identifier"]},
+"Action"->{
+"Value":>"",
+"TACode":>LineJoin[{"call", LabelIdentifier[Term["Identifier"]["Value"]]}]
+}|>,
+<|"From"->"Statement","To"->{Term["Print"],Term["Identifier"]},
+"Action"->{
+"Value":>"",
+"TACode":>LineJoin[{"print", LabelIdentifier[Term["Identifier"]["Value"]]}]
+}|>,
+<|"From"->"Statement","To"->{Term["Begin"],NonTerm["Statement"],NonTerm["StatementRep"],Term["End"]},
+"Action"->{
+"Value":>"",
+"TACode":>
+ColumnJoin[
+{
+NonTerm["Statement"]["TACode"],
+NonTerm["StatementRep"]["TACode"]
+}
+]
+}|>,
+<|"From"->"Statement","To"->{Term["If"],NonTerm["Condition"],Term["Then"],NonTerm["Statement"]},
+"Action"->{
+"Value":>NewLabel[],
+"TACode":>
+ColumnJoin[
+{
+NonTerm["Condition"]["TACode"],
+LineJoin[{NonTerm["Condition"]["Conditional"],LabelIdentifier[CurrentLabel["L"]]}],
+NonTerm["Statement"]["TACode"],
+LineJoin[{"label",LabelIdentifier[CurrentLabel["L"]]}]
+}
+]
+}|>,
+<|"From"->"Statement","To"->{Term["While"],NonTerm["Condition"],Term["Do"],NonTerm["Statement"]},
+"Action"->{
+"Value":>NewLabel[],
+"TACode":>
+ColumnJoin[
+{
+LineJoin[{"label",LabelIdentifier[CurrentLabel["L1"]]}],
+NonTerm["Condition"]["TACode"],
+LineJoin[{NonTerm["Condition"]["Conditional"],LabelIdentifier[CurrentLabel["L2"]]}],
+NonTerm["Statement"]["TACode"],
+LineJoin[{"goto",LabelIdentifier[CurrentLabel["L1"]]}],
+LineJoin[{"label",LabelIdentifier[CurrentLabel["L2"]]}]
+}
+]
+}|>,
+<|"From"->"Statement","To"->EmptyString[],
+"Action"->{"Value"->"","TACode"->""}|>,
 
-    <|"From"->"StatementRep","To"->{Term["Semicolon"], NonTerm["Statement"], NonTerm["StatementRep"]},
-    "Action"->{
-        "Value" :> "",
-        "TACode" :> 
-            ColumnJoin[
-                {
-                    NonTerm["Statement"]["TACode"], 
-                    NonTerm["StatementRep"]["TACode"]
-                }
-            ]
-    }|>,
-    <|"From"->"StatementRep", "To"->EmptyString[], 
-    "Action"->{"Value"->"", "TACode"->""}|>,
+<|"From"->"StatementRep","To"->{Term["Semicolon"],NonTerm["Statement"],NonTerm["StatementRep"]},
+"Action"->{
+"Value":>"",
+"TACode":>
+ColumnJoin[
+{
+NonTerm["Statement"]["TACode"],
+NonTerm["StatementRep"]["TACode"]
+}
+]
+}|>,
+<|"From"->"StatementRep","To"->EmptyString[],
+"Action"->{"Value"->"","TACode"->""}|>,
 
-    (* Conditionals *)
-    <|"From"->"Condition","To"->{Term["Odd"], NonTerm["Expression"]},
-    "Action"->{
-        "TACode" :> 
-        ColumnJoin[
-            {
-                NonTerm["Expression"]["TACode"], 
-                LineJoin[{"odd",NonTerm["Expression"]["Value"]}]
-            }
-        ], 
-        "Conditional"->"if_odd"
-    }
-    |>,
-    <|"From"->"Condition", "To"->{NonTerm["Expression1"], NonTerm["Op"], NonTerm["Expression2"]},
-    "Action"->{
-        "TACode" :> 
-        ColumnJoin[
-            {
-                NonTerm["Expression1"]["TACode"], 
-                NonTerm["Expression2"]["TACode"], 
-                LineJoin[{"compare", NonTerm["Expression2"]["Value"],NonTerm["Expression1"]["Value"]}]
-            }
-        ], 
-        "Conditional"->NonTerm["Op"]["Conditional"]
-    }|>,
-    <|"From"->"Expression1","To"->{NonTerm["Expression"]},"Action"->{"Value" :> NonTerm["Expression"]["Value"], "TACode" :> NonTerm["Expression"]["TACode"]}|>,
-    <|"From"->"Expression2","To"->{NonTerm["Expression"]},"Action"->{"Value" :> NonTerm["Expression"]["Value"], "TACode" :> NonTerm["Expression"]["TACode"]}|>,
-    <|"From"->"Op","To"->{Term["Equal"]},"Action"->{"Conditional"->"if_equal"}|>,
-    <|"From"->"Op","To"->{Term["NotEqual"]},"Action"->{"Conditional"->"if_not_equal"}|>,
-    <|"From"->"Op","To"->{Term["Lower"]},"Action"->{"Conditional"->"if_less"}|>,
-    <|"From"->"Op","To"->{Term["LowerOrEqual"]},"Action"->{"Conditional"->"if_less_or_equal"}|>,
-    <|"From"->"Op","To"->{Term["Greater"]},"Action"->{"Conditional"->"if_greater"}|>,
-    <|"From"->"Op","To"->{Term["GreaterOrEqual"]},"Action"->{"Conditional"->"if_greater_or_equal"}|>,
+(* Conditionals *)
+<|"From"->"Condition","To"->{Term["Odd"],NonTerm["Expression"]},
+"Action"->{
+"TACode":>
+ColumnJoin[
+{
+NonTerm["Expression"]["TACode"],
+LineJoin[{"odd",NonTerm["Expression"]["Value"]}]
+}
+],
+"Conditional"->"if_odd"
+}
+|>,
+<|"From"->"Condition","To"->{NonTerm["Expression1"],NonTerm["Op"],NonTerm["Expression2"]},"Action"->{
+"TACode":>
+ColumnJoin[
+{
+NonTerm["Expression1"]["TACode"],
+NonTerm["Expression2"]["TACode"],
+LineJoin[{"compare",NonTerm["Expression2"]["Value"],NonTerm["Expression1"]["Value"]}]
+}
+],
+"Conditional"->NonTerm["Op"]["Conditional"]
+}|>,
+<|"From"->"Expression1","To"->{NonTerm["Expression"]},"Action"->{"Value":>NonTerm["Expression"]["Value"],"TACode":>NonTerm["Expression"]["TACode"]}|>,
+<|"From"->"Expression2","To"->{NonTerm["Expression"]},"Action"->{"Value":>NonTerm["Expression"]["Value"],"TACode":>NonTerm["Expression"]["TACode"]}|>,
+<|"From"->"Op","To"->{Term["Equal"]},"Action"->{"Conditional"->"if_equal"}|>,
+<|"From"->"Op","To"->{Term["NotEqual"]},"Action"->{"Conditional"->"if_not_equal"}|>,
+<|"From"->"Op","To"->{Term["Lower"]},"Action"->{"Conditional"->"if_less"}|>,
+<|"From"->"Op","To"->{Term["LowerOrEqual"]},"Action"->{"Conditional"->"if_less_or_equal"}|>,
+<|"From"->"Op","To"->{Term["Greater"]},"Action"->{"Conditional"->"if_greater"}|>,
+<|"From"->"Op","To"->{Term["GreaterOrEqual"]},"Action"->{"Conditional"->"if_greater_or_equal"}|>,
 
-    (* Numeric expressions *)
-    <|"From"->"Expression","To"->{NonTerm["SignOpt"], NonTerm["Term"], NonTerm["AddRep"]},
-    "Action" :> If[NonTerm["AddRep"]["Value"] != "",
-        (* Case when there is a nonempty AddRep *)
-        {
-            "Value" :> NewVar[], 
-            "TACode" :> 
-            ColumnJoin[
-                {
-                    NonTerm["Term"]["TACode"], 
-                    NonTerm["AddRep"]["TACode"], 
-                    LineJoin[{NonTerm["AddRep"]["Op"], CurrentVar[], NonTerm["SignOpt"]["Value"],  NonTerm["Term"]["Value"], NonTerm["AddRep"]["Value"]}]
-                }
-            ]
-        }
-        ,
-        (* Case when AddRep is an empty string *)
-        {
-        "Value" :> NonTerm["Term"]["Value"], 
-        "TACode" :> NonTerm["Term"]["TACode"]
-        }
-    ]
-    |>,
+(* Numeric expressions *)
+<|"From"->"Expression","To"->{NonTerm["SignOpt"],NonTerm["Term"],NonTerm["AddRep"]},
+"Action":>If[NonTerm["AddRep"]["Value"] != "",
+(* Case when there is a nonempty AddRep *)
+{
+"Value":>NewVar[],
+"TACode":>
+ColumnJoin[
+{
+NonTerm["Term"]["TACode"],
+NonTerm["AddRep"]["TACode"],
+LineJoin[{NonTerm["AddRep"]["Op"],CurrentVar[],NonTerm["SignOpt"]["Value"], NonTerm["Term"]["Value"],NonTerm["AddRep"]["Value"]}]
+}
+]
+}
+,
+(* Case when AddRep is an empty string *)
+{
+"Value":>NonTerm["Term"]["Value"],
+"TACode":>NonTerm["Term"]["TACode"]
+}
+]
+|>,
 
-    <|"From"->"SignOpt","To"->{Term["Plus"]},
-    "Action"->{"Value"->"+"}|>,
-    <|"From"->"SignOpt","To"->{Term["Minus"]},
-    "Action"->{"Value"->"-"}|>,
-    <|"From"->"SignOpt","To"->EmptyString[], 
-    "Action"->{"Value"->""}|>,
+<|"From"->"SignOpt","To"->{Term["Plus"]},
+"Action"->{"Value"->"+"}|>,
+<|"From"->"SignOpt","To"->{Term["Minus"]},
+"Action"->{"Value"->"-"}|>,
+<|"From"->"SignOpt","To"->EmptyString[],
+"Action"->{"Value"->""}|>,
 
-    <|"From"->"AddRep","To"->{Term["Plus"], NonTerm["Term"], NonTerm["AddRep"]},
-    "Action" :> If[NonTerm["AddRep"]["Value"] != "",
-        (* Case when there is a nonempty AddRep *)
-        {
-            "Value" :> NewVar[], 
-            "TACode" :> 
-            ColumnJoin[
-                {
-                    NonTerm["Term"]["TACode"], 
-                    NonTerm["AddRep"]["TACode"], 
-                    LineJoin[{NonTerm["AddRep"]["Op"], CurrentVar[], NonTerm["Term"]["Value"], NonTerm["AddRep"]["Value"]}]
-                }
-            ], 
-            "Op"->"add"
-        }
-        ,
-        (* Case when AddRep is an empty string *)
-        {
-            "Value" :> NonTerm["Term"]["Value"], 
-            "TACode" :> NonTerm["Term"]["TACode"], 
-            "Op"->"add"
-        }
-    ]
-    |>,
+<|"From"->"AddRep","To"->{Term["Plus"],NonTerm["Term"],NonTerm["AddRep"]},
+"Action":>If[NonTerm["AddRep"]["Value"] != "",
+(* Case when there is a nonempty AddRep *)
+{
+"Value":>NewVar[],
+"TACode":>
+ColumnJoin[
+{
+NonTerm["Term"]["TACode"],
+NonTerm["AddRep"]["TACode"],
+LineJoin[{NonTerm["AddRep"]["Op"],CurrentVar[],NonTerm["Term"]["Value"],NonTerm["AddRep"]["Value"]}]
+}
+],
+"Op"->"add"
+}
+,
+(* Case when AddRep is an empty string *)
+{
+"Value":>NonTerm["Term"]["Value"],
+"TACode":>NonTerm["Term"]["TACode"],
+"Op"->"add"
+}
+]
+|>,
 
-    <|"From"->"AddRep","To"->{Term["Minus"], NonTerm["Term"], NonTerm["AddRep"]},
-    "Action" :>  If[NonTerm["AddRep"]["Value"] != "",
-        (* Case when there is a nonempty AddRep *)
-        {
-            "Value" :> NewVar[], 
-            "TACode" :> ColumnJoin[
-                {
-                    NonTerm["Term"]["TACode"], 
-                    NonTerm["AddRep"]["TACode"], 
-                    LineJoin[{NonTerm["AddRep"]["Op"], CurrentVar[], NonTerm["Term"]["Value"], NonTerm["AddRep"]["Value"]}]
-                }
-            ], 
-            "Op"->"substract"
-        }
-        ,
-        (* Case when AddRep is an empty string *)
-        {
-            "Value" :> NonTerm["Term"]["Value"], 
-            "TACode" :> NonTerm["Term"]["TACode"], 
-            "Op"->"substract"
-        }
-    ]
-    |>,
+<|"From"->"AddRep","To"->{Term["Minus"],NonTerm["Term"],NonTerm["AddRep"]},
+"Action":> If[NonTerm["AddRep"]["Value"] != "",
+(* Case when there is a nonempty AddRep *)
+{
+"Value":>NewVar[],
+"TACode":>ColumnJoin[
+{
+NonTerm["Term"]["TACode"],
+NonTerm["AddRep"]["TACode"],
+LineJoin[{NonTerm["AddRep"]["Op"],CurrentVar[],NonTerm["Term"]["Value"],NonTerm["AddRep"]["Value"]}]
+}
+],
+"Op"->"substract"
+}
+,
+(* Case when AddRep is an empty string *)
+{
+"Value":>NonTerm["Term"]["Value"],
+"TACode":>NonTerm["Term"]["TACode"],
+"Op"->"substract"
+}
+]
+|>,
 
-    <|"From"->"AddRep","To"->EmptyString[], 
-    "Action"->{"Value"->"", "TACode"->"", "Op"->""}|>,
+<|"From"->"AddRep","To"->EmptyString[],
+"Action"->{"Value"->"","TACode"->"","Op"->""}|>,
 
-    <|"From"->"Term", "To"->{NonTerm["Factor"], NonTerm["MultRep"]},
-    "Action" :>  If[NonTerm["MultRep"]["Value"] != "" ,
-        (* Case when there is a nonempty MultRep *)
-        {
-            "Value" :> NewVar[], 
-            "TACode" :> 
-            ColumnJoin[
-                {
-                    NonTerm["Factor"]["TACode"], 
-                    NonTerm["MultRep"]["TACode"], 
-                    LineJoin[{NonTerm["MultRep"]["Op"], CurrentVar[], NonTerm["Factor"]["Value"], NonTerm["MultRep"]["Value"]}]
-                }
-            ]
-        }
-        ,
-        (* Case when MultRep is an empty string *)
-        {
-            "Value" :> NonTerm["Factor"]["Value"], 
-            "TACode" :> NonTerm["Factor"]["TACode"]
-        }
-    ]
-    |>,
+<|"From"->"Term","To"->{NonTerm["Factor"],NonTerm["MultRep"]},
+"Action":> If[NonTerm["MultRep"]["Value"] !="" ,
+(* Case when there is a nonempty MultRep *)
+{
+"Value":>NewVar[],
+"TACode":>
+ColumnJoin[
+{
+NonTerm["Factor"]["TACode"],
+NonTerm["MultRep"]["TACode"],
+LineJoin[{NonTerm["MultRep"]["Op"],CurrentVar[],NonTerm["Factor"]["Value"],NonTerm["MultRep"]["Value"]}]
+}
+]
+}
+,
+(* Case when MultRep is an empty string *)
+{
+"Value":>NonTerm["Factor"]["Value"],
+"TACode":>NonTerm["Factor"]["TACode"]
+}
+]
+|>,
 
-    <|"From"->"MultRep","To"->{Term["Times"], NonTerm["Factor"], NonTerm["MultRep"]},
-    "Action" :> If[NonTerm["MultRep"]["Value"] !="" ,
-        (* Case when there is a nonempty MultRep *)
-        {
-            "Value" :> NewVar[], 
-            "TACode" :> 
-            ColumnJoin[
-                {
-                    NonTerm["Factor"]["TACode"], 
-                    NonTerm["MultRep"]["TACode"], 
-                    LineJoin[{NonTerm["MultRep"]["Op"],  CurrentVar[], NonTerm["Factor"]["Value"], NonTerm["MultRep"]["Value"]}]
-                }
-            ], 
-            "Op"->"multiply"
-        }
-        ,
-        (* Case when MultRep is an empty string *)
-        {
-            "Value" :> NonTerm["Factor"]["Value"], 
-            "TACode" :> NonTerm["Factor"]["TACode"], 
-            "Op"->"multiply"
-        }
-    ]
-    |>,
+<|"From"->"MultRep","To"->{Term["Times"],NonTerm["Factor"],NonTerm["MultRep"]},
+"Action":>If[NonTerm["MultRep"]["Value"] !="" ,
+(* Case when there is a nonempty MultRep *)
+{
+"Value":>NewVar[],
+"TACode":>
+ColumnJoin[
+{
+NonTerm["Factor"]["TACode"],
+NonTerm["MultRep"]["TACode"],
+LineJoin[{NonTerm["MultRep"]["Op"], CurrentVar[],NonTerm["Factor"]["Value"],NonTerm["MultRep"]["Value"]}]
+}
+],
+"Op"->"multiply"
+}
+,
+(* Case when MultRep is an empty string *)
+{
+"Value":>NonTerm["Factor"]["Value"],
+"TACode":>NonTerm["Factor"]["TACode"],
+"Op"->"multiply"
+}
+]
+|>,
 
-    <|"From"->"MultRep","To"->{Term["Slash"], NonTerm["Factor"], NonTerm["MultRep"]},
-    "Action" :> If[NonTerm["MultRep"]["Value"] != "" ,
-        {
-            "Value" :> NewVar[], 
-            "TACode" :> 
-                ColumnJoin[
-                    {
-                        NonTerm["Factor"]["TACode"], 
-                        NonTerm["MultRep"]["TACode"], 
-                        LineJoin[{NonTerm["MultRep"]["Op"], CurrentVar[], NonTerm["Factor"]["Value"], NonTerm["MultRep"]["Value"]}]
-                    }
-                ], 
-            "Op"->"divide"
-        }
-        ,
-        (* Case when MultRep is an empty string *)
-        {
-            "Value" :> NonTerm["Factor"]["Value"], 
-            "TACode" :> NonTerm["Factor"]["TACode"], 
-            "Op"->"divide"
-        }
-    ]
-    |>,
+<|"From"->"MultRep","To"->{Term["Slash"],NonTerm["Factor"],NonTerm["MultRep"]},
+"Action":>If[NonTerm["MultRep"]["Value"] !="" ,
+{
+"Value":>NewVar[],
+"TACode":>
+ColumnJoin[
+{
+NonTerm["Factor"]["TACode"],
+NonTerm["MultRep"]["TACode"],
+LineJoin[{NonTerm["MultRep"]["Op"],CurrentVar[], NonTerm["Factor"]["Value"],NonTerm["MultRep"]["Value"]}]
+}
+],
+"Op"->"divide"
+}
+,
+(* Case when MultRep is an empty string *)
+{
+"Value":>NonTerm["Factor"]["Value"],
+"TACode":>NonTerm["Factor"]["TACode"],
+"Op"->"divide"
+}
+]
+|>,
 
-    <|"From"->"MultRep","To"->EmptyString[], 
-    "Action"->{"Value"->"","TACode"->"","Op"->""}|>,
+<|"From"->"MultRep","To"->EmptyString[],
+"Action"->{"Value"->"","TACode"->"","Op"->""}|>,
 
-    <|"From"->"Factor","To"->{Term["Identifier"]},
-    "Action"->{"Value" :> LabelIdentifier[Term["Identifier"]["Value"]], "TACode"->""}|>,
+<|"From"->"Factor","To"->{Term["Identifier"]},
+"Action"->{"Value":>LabelIdentifier[Term["Identifier"]["Value"]],"TACode"->""}|>,
 
-    <|"From"->"Factor","To"->{Term["NumberLiteral"]},
-    "Action"->{"Value"->Term["NumberLiteral"]["Value"], "TACode"->""}|>,
+<|"From"->"Factor","To"->{Term["NumberLiteral"]},
+"Action"->{"Value"->Term["NumberLiteral"]["Value"],"TACode"->""}|>,
 
-    <|"From"->"Factor","To"->{Term["LeftParenthesis"], NonTerm["Expression"], Term["RightParenthesis"]},
-    "Action"->{"Value"->NonTerm["Expression"]["Value"], "TACode"->NonTerm["Expression"]["TACode"]}|>
+<|"From"->"Factor","To"->{Term["LeftParenthesis"],NonTerm["Expression"],Term["RightParenthesis"]},
+"Action"->{"Value"->NonTerm["Expression"]["Value"],"TACode"->NonTerm["Expression"]["TACode"]}|>
 };
 
 
